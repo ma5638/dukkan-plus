@@ -1,7 +1,9 @@
-import ShoppingCartService from '../../services/ShoppingCartService';
-import ShippingService from '../../services/ShippingService';
-import TaxService from '../../services/TaxService';
-import OrderService from '../../services/OrderService';
+const ShoppingCartService  = require('../../services/ShoppingCartService');
+const ShippingService = require('../../services/ShippingService');
+const TaxService = require('../../services/TaxService');
+const OrderService = require('../../services/OrderService');
+
+
 
 class OrderController {
   static async create(req, res, next) {
@@ -53,4 +55,4 @@ class OrderController {
   }
 }
 
-export default OrderController;
+module.exports = OrderController;

@@ -21,4 +21,4 @@ class ProductHelpers {
   }
 }
 
-export default ProductHelpers;
+module.exports = ProductHelpers;

@@ -1,4 +1,4 @@
-export default (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
   const product_attribute = sequelize.define(
     'product_attribute',
     {

@@ -1,7 +1,7 @@
-import express from 'express';
-import ShoppingCartController from './ShoppingCartController';
-import InputValidator from '../../helpers/InputValidator';
-import ErrorValidator from '../../middleware/ErrorValidator';
+const express = require('express');
+const ShoppingCartController = require('./ShoppingCartController');
+const InputValidator = require('../../helpers/InputValidator');
+const ErrorValidator = require('../../middleware/ErrorValidator');
 
 const shoppingCartRouter = express.Router();
 
@@ -16,4 +16,4 @@ shoppingCartRouter.get('/shoppingCart', ShoppingCartController.getShoppingCart);
 
 shoppingCartRouter.delete('/shoppingCart/empty', ShoppingCartController.emptyShoppingCart);
 
-export default shoppingCartRouter;
+module.exports = shoppingCartRouter;

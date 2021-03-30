@@ -1,4 +1,4 @@
-import models from '../database/models';
+const models = require('../database/models');
 
 const { order_detail } = models;
 
@@ -29,4 +29,4 @@ class OrderDetailService {
   }
 }
 
-export default OrderDetailService;
+module.exports = OrderDetailService;

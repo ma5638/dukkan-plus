@@ -5,4 +5,4 @@ class PaginationHelper {
   }
 }
 
-export default PaginationHelper;
+module.exports = PaginationHelper;

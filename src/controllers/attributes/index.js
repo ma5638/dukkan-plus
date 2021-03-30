@@ -1,8 +1,7 @@
-import express from 'express';
-import AttributeController from './AttributeController';
-import InputValidator from '../../helpers/InputValidator';
-import ErrorValidator from '../../middleware/ErrorValidator';
-
+const express = require('express');
+const AttributeController = require('./AttributeController');
+const InputValidator = require('../../helpers/InputValidator');
+const ErrorValidator = require('../../middleware/ErrorValidator');
 const attributeRouter = express.Router();
 
 attributeRouter.get('/attributes', AttributeController.getAllAttributes);
@@ -19,4 +18,4 @@ attributeRouter.get(
   AttributeController.getProductAttributes
 );
 
-export default attributeRouter;
+module.exports = attributeRouter;

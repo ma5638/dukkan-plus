@@ -1,6 +1,6 @@
-import Sequelize from 'sequelize';
-import models from '../database/models';
-import PaginationHelper from '../helpers/PaginationHelper';
+const Sequelize = require('sequelize');
+const models = require('../database/models');
+const PaginationHelper = require('../helpers/PaginationHelper');
 
 const { Op } = Sequelize;
 const { product, category, attribute, attribute_value } = models;
@@ -119,4 +119,4 @@ class ProductService {
   }
 }
 
-export default ProductService;
+module.exports = ProductService;

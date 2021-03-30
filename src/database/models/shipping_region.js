@@ -1,4 +1,4 @@
-export default (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
   const shipping_region = sequelize.define('shipping_region', {
     shipping_region_id: {
       type: DataTypes.INTEGER(11),

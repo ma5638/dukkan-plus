@@ -37,4 +37,4 @@ class HelperUtility {
   }
 }
 
-export default HelperUtility;
+module.exports = HelperUtility;

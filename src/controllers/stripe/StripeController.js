@@ -1,6 +1,6 @@
-import stripe from 'stripe';
-import OrderService from '../../services/OrderService';
-import EmailUtil from '../../helpers/EmailUtil';
+const stripe = require('stripe');
+const OrderService = require('../../services/OrderService');
+const EmailUtil =require('../../helpers/EmailUtil');
 
 const stripeKey = process.env.STRIPE_SECRET_KEY;
 const stripePay = stripe(stripeKey);
@@ -44,4 +44,4 @@ class StripeController {
   }
 }
 
-export default StripeController;
+module.exports = StripeController;

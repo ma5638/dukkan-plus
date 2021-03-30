@@ -1,5 +1,5 @@
-import models from '../database/models';
-import HttpError from '../helpers/ErrorHandler';
+const models = require('../database/models');
+const HttpError = require('../helpers/ErrorHandler');
 
 const { tax } = models;
 
@@ -15,4 +15,4 @@ class TaxService {
   }
 }
 
-export default TaxService;
+module.exports = TaxService;

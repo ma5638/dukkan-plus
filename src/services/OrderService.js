@@ -1,7 +1,7 @@
-import models from '../database/models';
-import OrderDetailService from './OrderDetailService';
-import ShoppingCartService from './ShoppingCartService';
-import HttpError from '../helpers/ErrorHandler';
+const models = require('../database/models');
+const OrderDetailService = require('./OrderDetailService');
+const ShoppingCartService = require('./ShoppingCartService');
+const HttpError = require('../helpers/ErrorHandler');
 
 const { orders, order_detail, shipping, tax } = models;
 
@@ -41,4 +41,4 @@ class OrderService {
   }
 }
 
-export default OrderService;
+module.exports = OrderService;

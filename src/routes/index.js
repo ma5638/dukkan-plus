@@ -1,9 +1,9 @@
-import products from '../controllers/products';
-import customers from '../controllers/customers';
-import attributes from '../controllers/attributes';
-import shoppingCart from '../controllers/shoppingCart';
-import orders from '../controllers/orders';
-import stripe from '../controllers/stripe';
+const products = require('../controllers/products');
+const customers = require('../controllers/customers');
+const attributes = require('../controllers/attributes');
+const shoppingCart = require('../controllers/shoppingCart');
+const orders = require('../controllers/orders');
+const stripe = require('../controllers/stripe');
 
 const routes = (app) => {
   app.use(products);
@@ -16,4 +16,4 @@ const routes = (app) => {
   return app;
 };
 
-export default routes;
+module.exports = routes;

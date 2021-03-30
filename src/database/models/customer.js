@@ -1,6 +1,7 @@
-import bcrypt from 'bcryptjs';
+const bcrypt = require('bcryptjs');
 
-export default (sequelize, DataTypes) => {
+
+module.exports = (sequelize, DataTypes) => {
   const customer = sequelize.define(
     'customer',
     {

@@ -1,8 +1,8 @@
-import express from 'express';
-import OrderController from './OrderController';
-import AuthValidator from '../../middleware/AuthValidator';
-import InputValidator from '../../helpers/InputValidator';
-import ErrorValidator from '../../middleware/ErrorValidator';
+const express = require('express');
+const OrderController = require('./OrderController');
+const AuthValidator = require('../../middleware/AuthValidator');
+const InputValidator = require('../../helpers/InputValidator');
+const ErrorValidator = require('../../middleware/ErrorValidator');
 
 const orderRouter = express.Router();
 
@@ -23,4 +23,4 @@ orderRouter.get(
   OrderController.getOrderDetails
 );
 
-export default orderRouter;
+module.exports = orderRouter;

@@ -1,4 +1,4 @@
-import { validationResult } from 'express-validator/check';
+const { validationResult } = require('express-validator/check');
 
 class ErrorValidator {
   static check(req, res, next) {
@@ -11,4 +11,4 @@ class ErrorValidator {
   }
 }
 
-export default ErrorValidator;
+module.exports = ErrorValidator;

@@ -1,4 +1,4 @@
-import AttributeService from '../../services/AttributeService';
+const AttributeService = require('../../services/AttributeService');
 
 class AttributeController {
   static async getAllAttributes(req, res, next) {
@@ -31,4 +31,4 @@ class AttributeController {
   }
 }
 
-export default AttributeController;
+module.exports = AttributeController;

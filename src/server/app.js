@@ -1,24 +1,28 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import dotenv from 'dotenv';
-import cors from 'cors';
-import session from 'express-session';
-import sequelizeStore from 'connect-session-sequelize';
-import morgan from 'morgan';
-import path from 'path';
+// const express = require('express');
+const express = require('express');
+const bodyParser = require('body-parser');
+const dotenv = require('dotenv');
+const cors = require('cors');
+const session = require('express-session');
+const sequelizeStore = require('connect-session-sequelize');
+const morgan = require('morgan');
+const path = require('path');
 
-import db from '../database/models';
-import routes from '../routes';
-import ShoppingCartUtility from '../middleware/ShoppingCartUtility';
-import logger from '../helpers/logger';
+const db = require('../database/models');
+const routes = require('../routes');
+const ShoppingCartUtility = require('../middleware/ShoppingCartUtility');
+const logger = require('../helpers/logger');
 
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 6600;
-const secret = process.env.SECRET;
+// --------------- Must Fix  --------------
+// Commented out as a temporary solution
 
+const secret = process.env.SECRET || "8hy1jkr23iq1";
 const SessionStore = sequelizeStore(session.Store);
+
 const myStore = new SessionStore({
   db: db.sequelize,
 });
@@ -28,15 +32,18 @@ app.use(morgan('dev'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+// --------------- Must Fix  --------------
+// Commented out as a temporary solution
+console.log(secret);
 app.use(session({
-  secret,
+  secret: secret,
   store: myStore,
   resave: false,
   proxy: true,
   saveUninitialized: false
 }));
 
-myStore.sync();
+// myStore.sync();
 
 app.use(ShoppingCartUtility.generateCartId);
 
@@ -73,4 +80,4 @@ app.all('*', (req, res) => res.status(404).send({ message: 'Route not found' }))
 
 const server = app.listen(port, () => logger.info(`Server Listening on port ${port}`));
 
-export default server;
+module.exports = server;

@@ -1,4 +1,4 @@
-import JwtHelper from '../helpers/JwtHelper';
+const JwtHelper = require('../helpers/JwtHelper');
 
 class AuthValidator {
   static validateToken(req, res, next) {
@@ -28,4 +28,4 @@ class AuthValidator {
   }
 }
 
-export default AuthValidator;
+module.exports = AuthValidator;

@@ -1,7 +1,6 @@
-import express from 'express';
-import ProductController from './ProductController';
-import ProductValidator from '../../middleware/ProductValidator';
-
+const express = require('express');
+const ProductController = require('./ProductController');
+const ProductValidator = require('../../middleware/ProductValidator');
 const productRouter = express.Router();
 
 // Get all products
@@ -38,4 +37,4 @@ productRouter.get(
   ProductController.getProductsByDepartment
 );
 
-export default productRouter;
+module.exports = productRouter;

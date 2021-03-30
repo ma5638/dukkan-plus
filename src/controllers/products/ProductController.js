@@ -1,6 +1,6 @@
-import ProductService from '../../services/ProductService';
-import ProductHelpers from '../../helpers/ProductHelpers';
-import HttpError from '../../helpers/ErrorHandler';
+const ProductService = require('../../services/ProductService');
+const ProductHelpers = require('../../helpers/ProductHelpers');
+const HttpError = require('../../helpers/ErrorHandler');
 
 class ProductController {
   static async getAllProducts(req, res) {
@@ -161,4 +161,4 @@ class ProductController {
   }
 }
 
-export default ProductController;
+module.exports = ProductController;

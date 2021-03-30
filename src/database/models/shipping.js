@@ -1,4 +1,4 @@
-export default function (sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   const shipping = sequelize.define('shipping', {
     shipping_id: {
       type: DataTypes.INTEGER(11),

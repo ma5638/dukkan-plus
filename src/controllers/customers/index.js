@@ -1,10 +1,9 @@
-import express from 'express';
-import CustomerController from './CustomerController';
-import InputValidator from '../../helpers/InputValidator';
-import ErrorValidator from '../../middleware/ErrorValidator';
-import AuthValidator from '../../middleware/AuthValidator';
-import HelperUtility from '../../middleware/HelperUtility';
-
+const express = require('express');
+const CustomerController = require('./CustomerController');
+const InputValidator = require('../../helpers/InputValidator');
+const ErrorValidator = require('../../middleware/ErrorValidator');
+const AuthValidator = require('../../middleware/AuthValidator');
+const HelperUtility = require('../../middleware/HelperUtility');
 
 const customerRouter = express.Router();
 
@@ -48,4 +47,4 @@ customerRouter.put(
   CustomerController.updateCustomer
 );
 
-export default customerRouter;
+module.exports = customerRouter;

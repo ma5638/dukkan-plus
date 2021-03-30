@@ -1,5 +1,5 @@
-import models from '../database/models';
-import HttpError from '../helpers/ErrorHandler';
+const models = require('../database/models');
+const HttpError = require('../helpers/ErrorHandler');
 
 const { customer } = models;
 
@@ -29,4 +29,4 @@ class CustomerService {
   }
 }
 
-export default CustomerService;
+module.exports = CustomerService;

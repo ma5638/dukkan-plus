@@ -1,6 +1,6 @@
-import ShoppingCartService from '../../services/ShoppingCartService';
-import ProductService from '../../services/ProductService';
-import HttpError from '../../helpers/ErrorHandler';
+const ShoppingCartService  = require('../../services/ShoppingCartService');
+const ProductService = require('../../services/ProductService');
+const HttpError = require('../../helpers/ErrorHandler');
 
 class ShoppingController {
   static async addProductToCart(req, res, next) {
@@ -53,4 +53,4 @@ class ShoppingController {
   }
 }
 
-export default ShoppingController;
+module.exports = ShoppingController;

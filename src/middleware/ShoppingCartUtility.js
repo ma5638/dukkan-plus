@@ -1,4 +1,4 @@
-import shortid from 'shortid';
+const shortid = require('shortid');
 
 class ShoppingCartUtility {
   static generateCartId(req, res, next) {
@@ -13,4 +13,4 @@ class ShoppingCartUtility {
   }
 }
 
-export default ShoppingCartUtility;
+module.exports = ShoppingCartUtility;

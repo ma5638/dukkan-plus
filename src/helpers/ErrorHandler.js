@@ -1,4 +1,4 @@
-import ResponseHelper from './ResponseHelper';
+const ResponseHelper = require('./ResponseHelper');
 
 class HttpError extends Error {
   constructor(message, code = 500) {
@@ -28,4 +28,4 @@ class HttpError extends Error {
   }
 }
 
-export default HttpError;
+module.exports = HttpError;

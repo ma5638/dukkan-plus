@@ -1,4 +1,4 @@
-export default (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
   const review = sequelize.define('review', {
     review_id: {
       type: DataTypes.INTEGER(11),

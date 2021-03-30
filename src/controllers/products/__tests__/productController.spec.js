@@ -1,5 +1,5 @@
-import request from 'supertest';
-import server from '../../../server/app';
+const request = require('supertest');;
+const server = require('../../../server/app');
 
 describe('Product Controller Test', () => {
   afterAll(async () => {

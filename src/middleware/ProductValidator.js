@@ -1,5 +1,5 @@
-import GeneralValidator from '../helpers/GeneralValidator';
-import ResponseHelper from '../helpers/ResponseHelper';
+const GeneralValidator = require('../helpers/GeneralValidator');
+const ResponseHelper = require('../helpers/ResponseHelper');
 
 class ProductValidator {
   static validateQuery(req, res, next) {
@@ -43,4 +43,4 @@ class ProductValidator {
   }
 }
 
-export default ProductValidator;
+module.exports = ProductValidator;

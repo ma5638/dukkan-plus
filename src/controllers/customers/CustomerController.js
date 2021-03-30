@@ -1,5 +1,5 @@
-import CustomerService from '../../services/CustomerService';
-import JwtHelper from '../../helpers/JwtHelper';
+const CustomerService = require('../../services/CustomerService');
+const JwtHelper = require('../../helpers/JwtHelper');
 
 class CustomerController {
   static async signUp(req, res, next) {
@@ -71,4 +71,4 @@ class CustomerController {
   }
 }
 
-export default CustomerController;
+module.exports = CustomerController;

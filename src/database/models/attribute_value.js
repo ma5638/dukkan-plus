@@ -1,4 +1,4 @@
-export default (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
   const attribute_value = sequelize.define('attribute_value', {
     attribute_value_id: {
       type: DataTypes.INTEGER(11),

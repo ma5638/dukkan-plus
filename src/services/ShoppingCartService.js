@@ -1,5 +1,5 @@
-import models from '../database/models';
-import HttpError from '../helpers/ErrorHandler';
+const models = require('../database/models');
+const HttpError = require('../helpers/ErrorHandler');
 
 const { shopping_cart, product } = models;
 
@@ -46,4 +46,4 @@ class ShoppingCartService {
   }
 }
 
-export default ShoppingCartService;
+module.exports = ShoppingCartService;

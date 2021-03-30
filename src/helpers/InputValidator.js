@@ -1,5 +1,8 @@
-import { body, check } from 'express-validator/check';
-import { sanitizeBody, sanitize } from 'express-validator/filter';
+// import { body, check } from 'express-validator/check';
+// import { sanitizeBody, sanitize } from 'express-validator/filter';
+
+const { body, check } = require('express-validator/check');
+const { sanitizeBody, sanitize } = require('express-validator/filter');
 
 class InputValidator {
   static signUpValidator() {
@@ -151,4 +154,4 @@ class InputValidator {
   }
 }
 
-export default InputValidator;
+module.exports = InputValidator;
