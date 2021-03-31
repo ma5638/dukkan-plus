@@ -1,4 +1,4 @@
-// const express = require('express');
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
@@ -32,9 +32,7 @@ app.use(morgan('dev'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-// --------------- Must Fix  --------------
-// Commented out as a temporary solution
-console.log(secret);
+
 app.use(session({
   secret: secret,
   store: myStore,
@@ -43,7 +41,10 @@ app.use(session({
   saveUninitialized: false
 }));
 
-// myStore.sync();
+// ------------- TEMP FIX ------------
+// Commented out for now:
+
+myStore.sync();
 
 app.use(ShoppingCartUtility.generateCartId);
 
