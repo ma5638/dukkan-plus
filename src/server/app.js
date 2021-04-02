@@ -17,8 +17,6 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 6600;
-// --------------- Must Fix  --------------
-// Commented out as a temporary solution
 
 const secret = process.env.SECRET || "8hy1jkr23iq1";
 const SessionStore = sequelizeStore(session.Store);
@@ -41,26 +39,29 @@ app.use(session({
   saveUninitialized: false
 }));
 
-// ------------- TEMP FIX ------------
-// Commented out for now:
 
 myStore.sync();
 
 app.use(ShoppingCartUtility.generateCartId);
 
-app.set('view engine', 'pug');
+// app.set('view engine', 'pug');
+// app.set('views', path.join(__dirname, '../views'));
+// app.use(express.static(path.join(__dirname, '../views')));
+app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../views'));
-app.use(express.static(path.join(__dirname, '../views')));
 
-app.get('/', (req, res) => {
-  res.send('Welcome to the e-commerce platform');
-});
+
+// app.get('/', (req, res) => {
+//   res.send('Welcome to the e-commerce platform');
+// });
 
 app.get('/checkout', (req, res) => {
   res.render('index');
 });
 
 routes(app);
+
+
 
 app.use((err, req, res, next) => {
   const {
@@ -77,7 +78,11 @@ app.use((err, req, res, next) => {
   return res.status(code).send({ message: errorMessage });
 });
 
+app.use(express.static(path.join(__dirname, '../../static')));    // Static files are loaded here e.g. .css and .js
+
 app.all('*', (req, res) => res.status(404).send({ message: 'Route not found' }));
+
+
 
 const server = app.listen(port, () => logger.info(`Server Listening on port ${port}`));
 

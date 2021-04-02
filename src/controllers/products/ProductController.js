@@ -16,22 +16,28 @@ class ProductController {
         page: requiredPage,
         limit: requiredLimit
       });
+      // ------------------------
+      // Count is always 100. Why???
 
-      if (rows && rows.length < 1) {
-        return res.status(200).json({
-          message: 'There are no products available',
-          count,
-          rows
-        });
-      }
+
+
+      // if (rows && rows.length < 1) {
+      //   return res.status(200).json({
+      //     message: 'There are no products available',
+      //     count,
+      //     rows
+      //   });
+      // }
 
       const products = await ProductHelpers.formatData(rows, descriptionLength);
-      return res.status(200).send({
-        count,
-        rows: products
-      });
+      // return res.status(200).send({
+      //   count,
+      //   rows: products
+      // });
+      return {count, rows:products};
     } catch (error) {
-      return HttpError.sendErrorResponse(error, res);
+      // return HttpError.sendErrorResponse(error, res);
+      return {count:-1, rows:HttpError.sendErrorResponse(error, res)};
     }
   }
 
