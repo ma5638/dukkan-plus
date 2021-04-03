@@ -10,8 +10,8 @@ productRouter.get('/products', ProductController.getAllProducts);
 // Get products by search string
 productRouter.get(
   '/products/search',
-  // ProductValidator.validateQuery,
-  // ProductValidator.validateSearchQuery,
+  ProductValidator.validateQuery,
+  ProductValidator.validateSearchQuery,
   ProductController.getProductsBySearchString
 );
 

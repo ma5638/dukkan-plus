@@ -12,14 +12,9 @@ const routes = (app) => {
   // app.get('route', function(request,response))
 
   app.get('/',(req,res)=>{
-    pageTitle = "Home Page";
-    const products = ["Apples","Tomatoes", "Carrots"];
+    pageTitle = "Home Page | Dukkan";
     return res.render('index',{
-      pageTitle,
-      products
-    });
-    return res.render('index',{
-
+      pageTitle
     });
   });
 

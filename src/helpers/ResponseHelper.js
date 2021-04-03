@@ -1,8 +1,10 @@
 class ResponseHelper {
   static sendResponse(res, code, data) {
-    return res.status(code).json({
-      ...data,
-    });
+    // -------------- Error -----------------
+    // return res.status(code).json({
+    //   ...data,
+    // });
+    return res.render("404");
   }
 }
 
