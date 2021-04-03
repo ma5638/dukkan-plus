@@ -5,23 +5,13 @@ const productRouter = express.Router();
 
 // Get all products
 // productRouter.get('/products', ProductController.getAllProducts);
-productRouter.get('/products', async (req,res)=>{
-  const {count,rows} = await ProductController.getAllProducts(req,res);
-  if(count==-1) // -1 means error
-  {
-    return rows;  // rows represents an error if count = -1
-  }
-
-  // Put code to render the actual webpage here
-
-  return res.send({count,rows});  // Temporary
-});
+productRouter.get('/products', ProductController.getAllProducts);
 
 // Get products by search string
 productRouter.get(
   '/products/search',
-  ProductValidator.validateQuery,
-  ProductValidator.validateSearchQuery,
+  // ProductValidator.validateQuery,
+  // ProductValidator.validateSearchQuery,
   ProductController.getProductsBySearchString
 );
 
@@ -31,6 +21,7 @@ productRouter.get(
   ProductValidator.validateParamId,
   ProductController.getProductDetails
 );
+
 
 // Get products by category
 productRouter.get(

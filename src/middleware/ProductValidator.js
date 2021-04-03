@@ -6,6 +6,7 @@ class ProductValidator {
     const { query } = req;
 
     const errors = GeneralValidator.validateIntegersInObject(query);
+    // return webpage here
     return errors.length < 1
       ? next()
       : ResponseHelper.sendResponse(res, 400, { success: false, errors });
@@ -34,6 +35,7 @@ class ProductValidator {
     const { query: { query_string } } = req;
 
     if (!query_string || query_string.trim().length < 1) {
+      // We do not need a search query
       return ResponseHelper.sendResponse(res, 400, {
         success: false,
         error: '"query_string" is required to search'

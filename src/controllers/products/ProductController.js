@@ -111,7 +111,7 @@ class ProductController {
 
   static async getProductsBySearchString(req, res) {
     try {
-      const {
+      let {     // converted const to let because had to change query_string later
         query: {
           page, limit, description_length, query_string
         }
@@ -128,15 +128,19 @@ class ProductController {
         }
       );
 
-      if (rows && rows.length < 1) {
-        return res.status(200).json({
-          message: 'Sorry no products match your search keyword',
-          count,
-          rows
-        });
-      }
+      // Can comment this out
+      // if (rows && rows.length < 1) {
+      //   return res.status(200).json({
+      //     message: 'Sorry no products match your search keyword',
+      //     count,
+      //     rows
+      //   });
+      // }
 
       const products = await ProductHelpers.formatData(rows, descriptionLength);
+
+      // return proper webpage instead here
+      
       return res.status(200).send({
         count,
         rows: products

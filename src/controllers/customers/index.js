@@ -7,6 +7,17 @@ const HelperUtility = require('../../middleware/HelperUtility');
 
 const customerRouter = express.Router();
 
+// customerRouter.get('/account',(req,res)=>{
+//   const token = req.headers['user-key'];
+//   console.log("Token:",token);
+//   if(token){
+//     const decodedData = JwtHelper.decodeToken(authToken);
+//     return res.send(decodedData);
+//   }
+//   return res.send(token);
+// });
+
+// Pre-built POST and PUT routes
 customerRouter.put(
   '/customer',
   AuthValidator.validateToken,
@@ -22,6 +33,8 @@ customerRouter.post(
   CustomerController.signUp
 );
 
+
+// Figure out how to check for login anywhere else
 customerRouter.post(
   '/customers/login',
   InputValidator.loginValidator(),

@@ -5,6 +5,7 @@ class AuthValidator {
     try {
       const token = req.headers['user-key'];
 
+      // Token means that the customer is logged in
       if (!token) {
         return res.status(401).send({
           code: 'AUT_O1',
