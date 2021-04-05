@@ -137,11 +137,16 @@ class InputValidator {
   }
 
   static cartValidator() {
+    // return [
+    //   sanitizeBody(['size', 'color', 'product_id']).trim(),
+    //   ...InputValidator.stringValidator('size'),
+    //   ...InputValidator.stringValidator('color'),
+    //   ...InputValidator.integerValidator('product_id'),
+    // ];
     return [
-      sanitizeBody(['size', 'color', 'product_id']).trim(),
-      ...InputValidator.stringValidator('size'),
-      ...InputValidator.stringValidator('color'),
+      sanitizeBody(['quantity', 'product_id']).trim(),
       ...InputValidator.integerValidator('product_id'),
+      ...InputValidator.integerValidator('quantity'),
     ];
   }
 
@@ -150,6 +155,13 @@ class InputValidator {
       sanitizeBody(['stripeToken', 'order_id']).trim(),
       ...InputValidator.stringValidator('stripeToken'),
       ...InputValidator.integerValidator('order_id')
+    ];
+  }
+
+  static cartItemValidator(){
+    return [
+      sanitizeBody(['item_id']).trim(),
+      ...InputValidator.integerValidator('item_id'),
     ];
   }
 }

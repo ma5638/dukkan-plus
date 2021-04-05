@@ -1,40 +1,49 @@
 const ShoppingCartService  = require('../../services/ShoppingCartService');
+// const ShoppingCartHelper  = require('../../services/ShoppingCartHelper');
 const ProductService = require('../../services/ProductService');
 const HttpError = require('../../helpers/ErrorHandler');
 
 class ShoppingController {
   static async addProductToCart(req, res, next) {
     try {
-      const { body: { size, color, product_id }, session: { cartId } } = req;
+      const { body: {  product_id, quantity }, session: { cartId } } = req;
 
-      const [product, productSize, productColor] = await Promise.all([
+      // const [product, productSize, productColor] = await Promise.all([
+      //   ProductService.fetchProductDetails(product_id),
+      //   ProductService.fetchProductByIdAndAttributeValue(size),
+      //   ProductService.fetchProductByIdAndAttributeValue(color),
+      // ]);
+      const [product] = await Promise.all([
         ProductService.fetchProductDetails(product_id),
-        ProductService.fetchProductByIdAndAttributeValue(size),
-        ProductService.fetchProductByIdAndAttributeValue(color),
       ]);
 
       HttpError.throwErrorIfNullOrEmpty(product, 'Provide a valid product_id');
-      HttpError.throwErrorIfNullOrEmpty(productSize, `This product is currently not available in '${size}' size`);
-      HttpError.throwErrorIfNullOrEmpty(productColor, `This product is currently not available in color '${color}'.`);
+      // HttpError.throwErrorIfNullOrEmpty(productSize, `This product is currently not available in '${size}' size`);
+      // HttpError.throwErrorIfNullOrEmpty(productColor, `This product is currently not available in color '${color}'.`);
 
-      const attributes = `${size}, ${color}`;
-      const quantity = 1;
+      // const attributes = `${size}, ${color}`;
+      // const quantity = quantity;
       const added_on = Date.now();
-      const cart = await ShoppingCartService.addProductToCart({ cartId, product_id, attributes, quantity, added_on });
+      // const cart = await ShoppingCartService.addProductToCart({ cartId, product_id, attributes, quantity, added_on });
+      const cart = await ShoppingCartService.addProductToCart({ cartId, product_id, quantity, added_on });
 
-      return res.status(200).send(cart);
+      // return res.status(200).send(cart);
+      return res.redirect('/shoppingCart');
     } catch (error) {
       next(error);
     }
   }
 
-  static async getShoppingCart(req, res, next) {
+  static async removeItemFromShoppingCart(req, res, next) {
     try {
-      const { session: { cartId } } = req;
+      const { body: { item_id } ,session: { cartId } } = req;
 
-      const shoppingCart = await ShoppingCartService.fetchShoppingCart(cartId);
+      const shoppingCart = await ShoppingCartService.removeItemFromShoppingCart(item_id,cartId);
 
-      return res.status(200).send(shoppingCart);
+      // return res.status(200).send(shoppingCart);
+
+      console.log(shoppingCart);
+      return res.redirect('/shoppingCart')
     } catch (error) {
       next(error);
     }
@@ -46,7 +55,26 @@ class ShoppingController {
 
       await ShoppingCartService.emptyShoppingCartByCartId(cartId);
 
-      return res.status(200).send([]);
+      // return res.status(200).send([]);
+      return res.redirect("/shoppingCart",{});
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async getShoppingCart(req, res, next) {
+    try {
+      const { session: { cartId } } = req;
+
+      const shoppingCart = await ShoppingCartService.fetchShoppingCart(cartId);
+
+      // return res.status(200).send(shoppingCart);
+
+      // console.log(shoppingCart);
+      return res.render("cart",{
+        shoppingCart
+      });
+
     } catch (error) {
       next(error);
     }

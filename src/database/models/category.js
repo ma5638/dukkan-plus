@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       department_id: {
         type: DataTypes.INTEGER(11),
-        allowNull: false,
+        // allowNull: false,
         comment: 'null'
       },
       name: {

@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     attributes: {
       type: DataTypes.STRING(1000),
-      allowNull: false,
+      // allowNull: false,
       comment: 'null'
     },
     quantity: {
