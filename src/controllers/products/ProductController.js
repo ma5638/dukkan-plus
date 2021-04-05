@@ -34,10 +34,16 @@ class ProductController {
       //   count,
       //   rows: products
       // });
-      return {count, rows:products};
+      console.log(products);
+
+      return res.render("shop-grid-full",{
+        products
+      });
+
+      // return {count, rows:products};
     } catch (error) {
-      // return HttpError.sendErrorResponse(error, res);
-      return {count:-1, rows:HttpError.sendErrorResponse(error, res)};
+      return HttpError.sendErrorResponse(error, res);
+      // return {count:-1, rows:HttpError.sendErrorResponse(error, res)};
     }
   }
 
@@ -157,13 +163,17 @@ class ProductController {
       const product = await ProductService.fetchProductDetails(product_id);
 
       if (!product) {
-        return res.status(200).json({
-          message: 'Product not found',
-        });
+        // return res.status(200).json({
+        //   message: 'Product not found',
+        // });
+        return next();
       }
 
-      return res.status(200).send({
-        ...product
+      // return res.status(200).send({
+      //   ...product
+      // });
+      return res.render('product-detail',{
+        product
       });
     } catch (error) {
       return HttpError.sendErrorResponse(error, res);

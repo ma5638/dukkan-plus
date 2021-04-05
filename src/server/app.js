@@ -28,8 +28,8 @@ const myStore = new SessionStore({
 app.use(cors());
 app.use(morgan('dev'));
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 app.use(session({
   secret: secret,
@@ -54,6 +54,7 @@ app.set('views', path.join(__dirname, '../views'));
 // app.get('/', (req, res) => {
 //   res.send('Welcome to the e-commerce platform');
 // });
+
 
 app.get('/checkout', (req, res) => {
   res.render('index');

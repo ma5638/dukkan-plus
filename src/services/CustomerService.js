@@ -14,14 +14,18 @@ class CustomerService {
     return user;
   }
 
-  static async updateUser(body) {
-    const { email } = body;
-    const user = await CustomerService.findUser({ email });
-    HttpError.throwErrorIfNullOrEmpty(user, 'User not found');
 
-    const [result] = await customer.update({ ...body }, { where: { email } });
+  // Right now you cannot update an email
+  static async updateUser(details) {
+    const { body, currEmail } = details;
+
+    const user = await CustomerService.findUser({ email:currEmail });
+    HttpError.throwErrorIfNullOrEmpty(user, 'User not found');
+    
+
+    const [result] = await customer.update({ ...body }, { where: { email:currEmail } });
     if (result) {
-      const updatedUser = await CustomerService.findUser({ email });
+      const updatedUser = await CustomerService.findUser({ email:body.email });
       return { ...updatedUser.toJSON() };
     }
 

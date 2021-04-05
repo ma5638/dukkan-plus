@@ -63,7 +63,7 @@ class InputValidator {
   static phoneNumberValidation(field) {
     return [
       body(field)
-        .optional()
+        .optional({nullable:true})
         .isMobilePhone()
         .withMessage('Enter a valid phone number')
     ];

@@ -10,7 +10,7 @@
     "db:seed": "node_modules/.bin/sequelize db:seed:all",
     "lint": "node_modules/.bin/eslint ./src",
     "lint:fix": "yarn lint --fix",
-    "serve": "node src/server/app.js",
+    "serve": "nodemon src/server/app.js",
     "start": "yarn serve",
     "start:dev": "nodemon --exec babel-node src/server/app.js",
     "pretest": "NODE_ENV=test babel-node src/database/migrations/DbMigrate.js && NODE_ENV=test yarn db:seed",
@@ -50,7 +50,7 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.17.1",
     "jest": "^24.7.1",
-    "nodemon": "^1.18.11",
+    "nodemon": "^1.19.4",
     "supertest": "^4.0.2"
   }
 }
