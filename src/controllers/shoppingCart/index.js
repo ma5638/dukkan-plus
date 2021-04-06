@@ -25,4 +25,7 @@ shoppingCartRouter.post('/shoppingCart/remove',
   ErrorValidator.check,
   ShoppingCartController.removeItemFromShoppingCart);
 
+
+shoppingCartRouter.get('/checkout', ShoppingCartController.showCheckout);
+
 module.exports = shoppingCartRouter;

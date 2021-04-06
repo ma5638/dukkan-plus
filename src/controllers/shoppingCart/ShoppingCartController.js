@@ -56,7 +56,7 @@ class ShoppingController {
       await ShoppingCartService.emptyShoppingCartByCartId(cartId);
 
       // return res.status(200).send([]);
-      return res.redirect("/shoppingCart",{});
+      return res.redirect("/shoppingCart");
     } catch (error) {
       next(error);
     }
@@ -72,6 +72,25 @@ class ShoppingController {
 
       // console.log(shoppingCart);
       return res.render("cart",{
+        shoppingCart
+      });
+
+    } catch (error) {
+      next(error);
+    }
+  }
+  static async showCheckout(req,res,next){
+    console.log("Begninning///");
+    try {
+      const { session: { cartId } } = req;
+
+      const shoppingCart = await ShoppingCartService.fetchShoppingCart(cartId);
+
+      // return res.status(200).send(shoppingCart);
+
+      // console.log(shoppingCart);
+      console.log("CHECKING OUT");
+      return res.render("checkout",{
         shoppingCart
       });
 
