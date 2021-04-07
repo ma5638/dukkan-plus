@@ -10,16 +10,23 @@ const productAttributes = [
   'description',
   'price',
   'discounted_price',
-  'thumbnail'
+  'image'
 ];
 
 class ProductService {
   static async fetchAndCountProducts({ page, limit }) {
     const paginationQuery = PaginationHelper.paginate(page, limit);
     const result = await product.findAndCountAll({
+      include: [
+        {
+          model: category,
+          as: 'Category',
+          // attributes: []
+        }
+      ],
       ...paginationQuery,
       attributes: productAttributes,
-      raw: true
+      // raw: true,
     });
 
     return result;
