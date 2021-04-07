@@ -102,7 +102,20 @@ class ProductService {
   }
 
   static async fetchProductDetails(product_id) {
-    const result = await product.findByPk(+product_id, { raw: true });
+    const result = await product.findByPk(
+      
+      +product_id, 
+      { 
+        include: [
+          {
+            model: category,
+            as: 'Category',
+            // attributes: []
+          }
+        ],
+        // raw: true 
+      }
+      );
     return result;
   }
 

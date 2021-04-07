@@ -28,13 +28,14 @@ class ProductController {
       //     rows
       //   });
       // }
+      console.log(rows);
 
       const products = await ProductHelpers.formatData(rows, descriptionLength);
       // return res.status(200).send({
       //   count,
       //   rows: products
       // });
-      console.log(products);
+      // console.log(products);
 
       return res.render("shop-grid-full",{
         products
@@ -160,7 +161,13 @@ class ProductController {
     try {
       const { params: { product_id } } = req;
 
-      const product = await ProductService.fetchProductDetails(product_id);
+      let product = await ProductService.fetchProductDetails(product_id);
+
+      if(product.Category.length!=0){
+        product.category = product.Category[0];
+      }
+      
+      console.log(product);
 
       if (!product) {
         // return res.status(200).json({

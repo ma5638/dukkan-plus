@@ -1436,13 +1436,13 @@
                                                 <td>
                                                     <div class="table-p__box">
                                                         <div class="table-p__img-wrap">
-
-                                                            <img class="u-img-fluid" src="images/product/electronic/product3.jpg" alt=""></div>
+                                                            <% image_link = item.product.Category.length!=0 && item.product.Category[0].name && item.product.image? item.product.Category[0].name + "/" + item.product.image:"product-default.jpg"  %>
+                                                            <img class="u-img-fluid" src="images/product/<%= image_link %>" alt=""></div>
                                                         <div class="table-p__info">
 
                                                             <span class="table-p__name">
 
-                                                                <a href="product-detail.html"><%= item.product.name %></a></span>
+                                                                <a href="/products/<%= item.product.product_id %>"><%= item.product.name %></a></span>
 
                                                             <!-- <span class="table-p__category">
 

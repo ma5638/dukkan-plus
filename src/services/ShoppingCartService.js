@@ -1,7 +1,7 @@
 const models = require('../database/models');
 const HttpError = require('../helpers/ErrorHandler');
 
-const { shopping_cart, product } = models;
+const { shopping_cart, product, category } = models;
 
 class ShoppingCartService {
   // removed "attributes"
@@ -27,8 +27,13 @@ class ShoppingCartService {
         cart_id: cartId
       },
       include: [{
-        model: product
-      }]
+        model: product,
+        include: [{
+          model: category,
+          as: 'Category',
+        }]
+      },
+    ]
     });
     // HttpError.throwErrorIfNullOrEmpty(cart, 'Your cart is currently empty', 200);
     return cart;

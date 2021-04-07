@@ -16,10 +16,12 @@ class ProductHelpers {
         category = {name:category.name}
       }
 
+      const trimmed_description = descriptionLength==-1? description: ProductHelpers.trimDescriptionLength(description, descriptionLength);
+
       return {
         product_id,
         name,
-        description: ProductHelpers.trimDescriptionLength(description, descriptionLength),
+        description: trimmed_description,
         price,
         discounted_price,
         image,

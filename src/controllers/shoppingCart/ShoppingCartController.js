@@ -68,6 +68,8 @@ class ShoppingController {
 
       const shoppingCart = await ShoppingCartService.fetchShoppingCart(cartId);
 
+      console.log(shoppingCart);
+
       // return res.status(200).send(shoppingCart);
 
       // console.log(shoppingCart);

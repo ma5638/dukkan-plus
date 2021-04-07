@@ -1408,10 +1408,11 @@
                             <div class="pd u-s-m-b-30">
                                 <div class="slider-fouc pd-wrap">
                                     <div id="pd-o-initiate">
-                                        <div class="pd-o-img-wrap" data-src="/images/product/vegetables/tomato.png">
+                                        <% image_link = product.category && product.category.name && product.image? product.category.name + "/" + product.image:"product-default.jpg"  %>
+                                        <div class="pd-o-img-wrap" data-src="/images/product/<%= image_link %>">
 
                                             <!-- <img class="u-img-fluid" src="images/product/product-d-1.jpg" data-zoom-image="images/product/product-d-1.jpg" alt=""> -->
-                                            <img class="u-img-fluid" src="/images/product/vegetables/tomato.png" data-zoom-image="/images/product/vegetables/tomato.png" alt="">
+                                            <img class="u-img-fluid" src="/images/product/<%= image_link %>" data-zoom-image="/images/product/<%= image_link %>" alt="">
                                         </div>
                                         <div class="pd-o-img-wrap" data-src="/images/product/product-d-2.jpg">
 
