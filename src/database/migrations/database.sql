@@ -11,7 +11,7 @@ CREATE TABLE `department` (
 -- Create category table
 CREATE TABLE `category` (
   `category_id`   INT            NOT NULL  AUTO_INCREMENT,
-  `department_id` INT            NOT NULL,
+  `department_id` INT,
   `name`          VARCHAR(100)   NOT NULL,
   `description`   VARCHAR(1000),
   PRIMARY KEY (`category_id`),
@@ -70,7 +70,7 @@ CREATE TABLE `shopping_cart` (
   `item_id`     INT           NOT NULL  AUTO_INCREMENT,
   `cart_id`     CHAR(32)      NOT NULL,
   `product_id`  INT           NOT NULL,
-  `attributes`  VARCHAR(1000) NOT NULL,
+  `attributes`  VARCHAR(1000),
   `quantity`    INT           NOT NULL,
   `buy_now`     BOOL          NOT NULL  DEFAULT true,
   `added_on`    DATETIME      NOT NULL,
@@ -122,7 +122,7 @@ CREATE TABLE `customer` (
   `customer_id`        INT           NOT NULL AUTO_INCREMENT,
   `name`               VARCHAR(50)   NOT NULL,
   `email`              VARCHAR(100)  NOT NULL,
-  `password`           VARCHAR(50)   NOT NULL,
+  `password`           VARCHAR(150)   NOT NULL,
   `credit_card`        TEXT,
   `address_1`          VARCHAR(100),
   `address_2`          VARCHAR(100),

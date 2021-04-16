@@ -28,7 +28,7 @@ class CustomerController {
       //   accessToken,
       //   expires_in: expiresIn
       // });
-      return res.redirect('/dashboard');
+      return res.redirect('/signin');
     } catch (error) {
       return next(error);
     }
@@ -52,6 +52,8 @@ class CustomerController {
       const customer = user.toJSONData();
       const expiresIn = '1h';
       req.session.token = null;
+
+      console.log(user);
       
       const accessToken = JwtHelper.generateToken({ data: customer, expiresIn });
       console.log("Logging In...");
@@ -69,7 +71,8 @@ class CustomerController {
       // });
       return res.redirect('/dashboard');
     } catch (error) {
-      return next(error);
+      // return next(error);
+      next();
     }
   }
 
