@@ -98,6 +98,22 @@ class InputValidator {
     ];
   }
 
+  static checkoutValidator() {
+    return [
+      sanitizeBody(['card_number', 'cvv', 'exp_date_m', 'exp_date_y']).trim(),
+      body('card_number')
+        .isCreditCard()
+        .withMessage('valid credit_card number is required'),
+      body('cvv')
+        .isInt({ min: 100, max: 999}),
+      body('exp_date_m')
+        .isInt({ min: 1, max: 12}),
+      body('exp_date_m')
+        .isInt({ min: 0, max: 99}),
+      
+    ];
+  }
+
   static stringValidator(field) {
     return [
       body(field)

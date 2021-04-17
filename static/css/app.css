@@ -630,6 +630,11 @@ body {
 .u-d-block {
   display: block; }
 
+
+.u-d-40{
+  width:40% !important
+}
+
 /*
   * Sizing
   * Easily make an element as wide or as tall (relative to its parent) with our width and height utilities.

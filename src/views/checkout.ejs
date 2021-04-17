@@ -1723,7 +1723,7 @@
                                         <div class="o-summary__section u-s-m-b-30">
                                             <div class="o-summary__box">
                                                 <!-- <h1 class="checkout-f__h1">PAYMENT INFORMATION</h1> -->
-                                                <form class="checkout-f__payment">
+                                                <form class="checkout-f__payment" method="POST" action="/orders">
                                                     <div class="u-s-m-b-10">
 
                                                         <!--====== Radio Box ======-->
@@ -1769,13 +1769,20 @@
                                                     <div class="gl-inline" id="card-information">
                                                         <div class="u-s-m-b-15">
                                                             <label class="gl-label" for="card-number">Name on card</label>
-                                                            <input class="input-text input-text--primary-style" type="text" name="card-name" id="card-name" required>
+                                                            <input class="input-text input-text--primary-style" type="text" name="card_name" id="card-name" required>
                                                             <label class="gl-label" for="billing-fname">Card number</label>
-                                                            <input class="input-text input-text--primary-style" type="text" name="card-number" id="card-number" required>
+                                                            <input class="input-text input-text--primary-style" type="text" name="card_number" id="card-number" required>
                                                         </div>
                                                         <div class="u-s-m-b-15">
                                                             <label class="gl-label" for="billing-fname">Expiration Date</label>
-                                                            <input class="input-text input-text--primary-style" type="text" name="exp-date" id="exp-date" placeholder="MM/YY" required>
+                                                            <div class="u-d-inline-block">
+                                                                <!-- <span> -->
+                                                                    <input class="u-d-40 input-text input-text--primary-style" type="text" name="exp_date_m" id="exp_date_m" placeholder="MM" required>
+                                                                    /
+                                                                    <input class="u-d-40 input-text input-text--primary-style" type="text" name="exp_date_y" id="exp_date_y" placeholder="YY" required>
+                                                                <!-- </span> -->
+                                                            </div>
+                                                            
                                                             <label class="gl-label" for="billing-fname">CVV</label>
                                                             <input class="input-text input-text--primary-style" type="text" name="cvv" id="cvv" required>
                                                         </div>

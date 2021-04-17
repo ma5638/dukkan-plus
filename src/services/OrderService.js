@@ -3,14 +3,12 @@ const OrderDetailService = require('./OrderDetailService');
 const ShoppingCartService = require('./ShoppingCartService');
 const HttpError = require('../helpers/ErrorHandler');
 
-const { orders, order_detail, shipping, tax } = models;
+const { orders, order_detail} = models;
 
 class OrderService {
   static async createOrder({
     total_amount,
     customer_id,
-    shipping_id,
-    tax_id,
     cart,
     cart_id
   }) {
@@ -19,8 +17,6 @@ class OrderService {
     const orderInfo = await orders.create({
       total_amount,
       customer_id,
-      shipping_id,
-      tax_id,
       created_on
     });
 
@@ -33,7 +29,7 @@ class OrderService {
   static async fetchOrderInfo({ order_id, customer_id }) {
     const orderDetails = await orders.findOne({
       where: { customer_id, order_id },
-      include: [order_detail, shipping, tax]
+      include: [order_detail]
     });
 
     HttpError.throwErrorIfNullOrEmpty(orderDetails, 'Order not found');

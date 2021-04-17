@@ -1,6 +1,4 @@
 const ShoppingCartService  = require('../../services/ShoppingCartService');
-const ShippingService = require('../../services/ShippingService');
-const TaxService = require('../../services/TaxService');
 const OrderService = require('../../services/OrderService');
 
 
@@ -8,11 +6,9 @@ const OrderService = require('../../services/OrderService');
 class OrderController {
   static async create(req, res, next) {
     try {
-      const { body: { shipping_id, tax_id }, session: { cartId }, decoded: { customer_id } } = req;
+      const { session: { cartId }, decoded: { customer_id } } = req;
       const [cart] = await Promise.all([
-        ShoppingCartService.fetchShoppingCart(cartId),
-        ShippingService.getShippingTypeDetailsById(shipping_id),
-        TaxService.fetchTaxDetailsById(tax_id)
+        ShoppingCartService.fetchShoppingCart(cartId)
       ]);
 
       const subTotal = cart.reduce((acc, item) => {
@@ -28,8 +24,6 @@ class OrderController {
 
       const newOrder = await OrderService.createOrder({
         customer_id,
-        shipping_id,
-        tax_id,
         cart,
         cart_id: cartId,
         total_amount: subTotal,

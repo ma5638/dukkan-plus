@@ -2,17 +2,24 @@ const express = require('express');
 const OrderController = require('./OrderController');
 const AuthValidator = require('../../middleware/AuthValidator');
 const InputValidator = require('../../helpers/InputValidator');
+const StripHelpers = require('../../helpers/StripeHelper');
 const ErrorValidator = require('../../middleware/ErrorValidator');
+const StripController =require('../stripe/StripeController');
 
 const orderRouter = express.Router();
 
 orderRouter.post(
   '/orders',
+  
   AuthValidator.validateToken,
-  InputValidator.integerValidator('shipping_id'),
-  InputValidator.integerValidator('tax_id'),
   ErrorValidator.check,
-  OrderController.create
+  InputValidator.checkoutValidator(),
+  ErrorValidator.check,
+  OrderController.create,
+  StripHelpers.createToken,
+  InputValidator.stripeValidator(),
+  ErrorValidator.check,
+  StripController.handlePayment,
 );
 
 orderRouter.get(

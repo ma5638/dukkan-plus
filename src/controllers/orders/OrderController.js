@@ -1,19 +1,24 @@
 const ShoppingCartService  = require('../../services/ShoppingCartService');
-const ShippingService = require('../../services/ShippingService');
-const TaxService = require('../../services/TaxService');
 const OrderService = require('../../services/OrderService');
+const ErrorHandler = require('../../helpers/ErrorHandler');
 
-
+const paymentOptions = ["cash", "card", "paypal"]
 
 class OrderController {
   static async create(req, res, next) {
     try {
-      const { body: { shipping_id, tax_id }, session: { cartId }, decoded: { customer_id } } = req;
+      const { body:{ payment },session: { cartId }, decoded: { customer_id } } = req;
+
+      if(!paymentOptions.includes(payment)) return ErrorHandler.sendErrorResponse({
+        error: {
+          message: "Payment option not selected",
+        }
+      }, res);
+
       const [cart] = await Promise.all([
         ShoppingCartService.fetchShoppingCart(cartId),
-        ShippingService.getShippingTypeDetailsById(shipping_id),
-        TaxService.fetchTaxDetailsById(tax_id)
       ]);
+      ErrorHandler.throwErrorIfNullOrEmpty(cart, "Cart is empty");
 
       const subTotal = cart.reduce((acc, item) => {
         const { product: { price, discounted_price }, quantity } = item;
@@ -28,16 +33,19 @@ class OrderController {
 
       const newOrder = await OrderService.createOrder({
         customer_id,
-        shipping_id,
-        tax_id,
         cart,
         cart_id: cartId,
         total_amount: subTotal,
       });
 
-      return res.status(201).send({
-        orderDetails: newOrder
-      });
+      // const result = await StripController.handlePayment(req,res,next);
+
+      // return res.status(201).send({
+      //   orderDetails: newOrder,
+      //   // result
+      // });
+      req.body.order_id = newOrder.order_id;
+      return next();
     } catch (error) {
       next(error);
     }

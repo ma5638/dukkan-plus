@@ -9,8 +9,8 @@ const orderRouter = express.Router();
 orderRouter.post(
   '/orders',
   AuthValidator.validateToken,
-  InputValidator.integerValidator('shipping_id'),
-  InputValidator.integerValidator('tax_id'),
+  // InputValidator.integerValidator('shipping_id'),
+  // InputValidator.integerValidator('tax_id'),
   ErrorValidator.check,
   OrderController.create
 );
