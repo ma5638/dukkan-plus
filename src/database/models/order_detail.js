@@ -19,11 +19,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         comment: 'null'
       },
-      attributes: {
-        type: DataTypes.STRING(1000),
-        allowNull: false,
-        comment: 'null'
-      },
+      // attributes: {
+      //   type: DataTypes.STRING(1000),
+      //   allowNull: false,
+      //   comment: 'null'
+      // },
       product_name: {
         type: DataTypes.STRING(100),
         allowNull: false,

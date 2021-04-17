@@ -33,16 +33,16 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
       comment: 'null',
     },
-    image_2: {
-      type: DataTypes.STRING(150),
-      allowNull: true,
-      comment: 'null',
-    },
-    thumbnail: {
-      type: DataTypes.STRING(150),
-      allowNull: true,
-      comment: 'null',
-    },
+    // image_2: {
+    //   type: DataTypes.STRING(150),
+    //   allowNull: true,
+    //   comment: 'null',
+    // },
+    // thumbnail: {
+    //   type: DataTypes.STRING(150),
+    //   allowNull: true,
+    //   comment: 'null',
+    // },
     display: {
       type: DataTypes.INTEGER(6),
       allowNull: false,
@@ -58,12 +58,6 @@ module.exports = (sequelize, DataTypes) => {
     product.belongsToMany(models.category, {
       as: 'Category',
       through: models.product_category,
-      foreignKey: 'product_id'
-    });
-
-    product.belongsToMany(models.attribute_value, {
-      as: 'ProductAttributes',
-      through: models.product_attribute,
       foreignKey: 'product_id'
     });
   };

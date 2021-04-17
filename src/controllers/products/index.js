@@ -31,12 +31,4 @@ productRouter.get(
   ProductController.getProductsByCategory
 );
 
-// Get products by department
-productRouter.get(
-  '/products/inDepartment/:department_id',
-  ProductValidator.validateParamId,
-  ProductValidator.validateQuery,
-  ProductController.getProductsByDepartment
-);
-
 module.exports = productRouter;

@@ -17,11 +17,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       comment: 'null'
     },
-    attributes: {
-      type: DataTypes.STRING(1000),
-      // allowNull: false,
-      comment: 'null'
-    },
+    // attributes: {
+    //   type: DataTypes.STRING(1000),
+    //   // allowNull: false,
+    //   comment: 'null'
+    // },
     quantity: {
       type: DataTypes.INTEGER(11),
       allowNull: false,

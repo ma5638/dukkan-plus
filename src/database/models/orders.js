@@ -49,16 +49,16 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
       comment: 'null'
     },
-    shipping_id: {
-      type: DataTypes.INTEGER(11),
-      allowNull: true,
-      comment: 'null'
-    },
-    tax_id: {
-      type: DataTypes.INTEGER(11),
-      allowNull: true,
-      comment: 'null'
-    }
+    // shipping_id: {
+    //   type: DataTypes.INTEGER(11),
+    //   allowNull: true,
+    //   comment: 'null'
+    // },
+    // tax_id: {
+    //   type: DataTypes.INTEGER(11),
+    //   allowNull: true,
+    //   comment: 'null'
+    // }
   }, {
     tableName: 'orders',
     timestamps: false
@@ -68,16 +68,6 @@ module.exports = (sequelize, DataTypes) => {
     orders.belongsTo(models.customer, {
       foreignKey: 'customer_id',
       targetKey: 'customer_id'
-    });
-
-    orders.belongsTo(models.shipping, {
-      foreignKey: 'shipping_id',
-      targetKey: 'shipping_id'
-    });
-
-    orders.belongsTo(models.tax, {
-      foreignKey: 'tax_id',
-      targetKey: 'tax_id'
     });
 
     orders.hasMany(models.order_detail, {

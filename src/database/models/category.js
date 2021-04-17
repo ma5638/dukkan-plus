@@ -9,11 +9,6 @@ module.exports = (sequelize, DataTypes) => {
         comment: 'null',
         autoIncrement: true
       },
-      department_id: {
-        type: DataTypes.INTEGER(11),
-        // allowNull: false,
-        comment: 'null'
-      },
       name: {
         type: DataTypes.STRING(100),
         allowNull: false,

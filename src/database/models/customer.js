@@ -63,12 +63,12 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         comment: 'null'
       },
-      shipping_region_id: {
-        type: DataTypes.INTEGER(11),
-        allowNull: false,
-        defaultValue: '1',
-        comment: 'null'
-      },
+      // shipping_region_id: {
+      //   type: DataTypes.INTEGER(11),
+      //   allowNull: false,
+      //   defaultValue: '1',
+      //   comment: 'null'
+      // },
       day_phone: {
         type: DataTypes.STRING(100),
         allowNull: true,
