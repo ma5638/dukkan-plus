@@ -36,14 +36,25 @@ const customerRouter = express.Router();
 // );
 
 customerRouter.get(
-  '/signup',(req,res)=>{
+  '/signup', (req, res) => {
     return res.render('signup');
   }
 );
 
 customerRouter.get(
-  '/signin',(req,res)=>{
+  '/signin', (req, res) => {
     return res.render('signin');
+  }
+);
+
+
+// COMMENT THIS OUT LATER
+// LAZY SIGN IN
+customerRouter.get(
+  '/devsignin', (req, res, next) => {
+    req.body.email = "test@hotmail.com";
+    req.body.password = "password123";
+    return CustomerController.login(req,res,next);
   }
 );
 
@@ -56,46 +67,46 @@ customerRouter.get(
 //   }
 // );
 customerRouter.get(
-  '/dashboard', 
+  '/dashboard',
   AuthValidator.validateToken,
-  (req,res)=>{
+  (req, res) => {
     // if(!req.auth) return next();
-    return res.render('dashboard',{
+    return res.render('dashboard', {
       data: req.decoded,
     });
   }
 );
 
 customerRouter.get(
-  '/dashboard/profile', 
+  '/dashboard/profile',
   AuthValidator.validateToken,
-  (req,res)=>{
-    return res.render('dash-my-profile',{
-        data: req.decoded,
-      });
+  (req, res) => {
+    return res.render('dash-my-profile', {
+      data: req.decoded,
+    });
   }
 );
 
 customerRouter.get(
-  '/dashboard/editprofile', 
+  '/dashboard/editprofile',
   AuthValidator.validateToken,
-  (req,res)=>{
-    return res.render('dash-edit-profile',{
-        data: req.decoded,
-      });
+  (req, res) => {
+    return res.render('dash-edit-profile', {
+      data: req.decoded,
+    });
   }
 );
 
 customerRouter.post(
-  '/dashboard/updateprofile', 
+  '/dashboard/updateprofile',
   AuthValidator.validateToken,
   // If fields were left blank, give original values
-  (req,res,next)=>{
+  (req, res, next) => {
     // console.log(req.body);
-    req.body.name = req.body.name == ""? req.decoded.name : req.body.name;
-    req.body.email = req.body.email == ""? req.decoded.email : req.body.email;
-    req.body.mob_phone = req.body.mob_phone == ""? null : req.body.mob_phone;
-    req.body.mob_phone = req.body.mob_phone==null && req.decoded.mob_phone!=null? req.decoded.mob_phone: req.body.mob_phone;
+    req.body.name = req.body.name == "" ? req.decoded.name : req.body.name;
+    req.body.email = req.body.email == "" ? req.decoded.email : req.body.email;
+    req.body.mob_phone = req.body.mob_phone == "" ? null : req.body.mob_phone;
+    req.body.mob_phone = req.body.mob_phone == null && req.decoded.mob_phone != null ? req.decoded.mob_phone : req.body.mob_phone;
     return next();
   },
   InputValidator.customerDetailsValidator(),
@@ -108,13 +119,15 @@ customerRouter.post(
 );
 
 customerRouter.get(
-  '/dashboard/orders', 
-    AuthValidator.validateToken,
-    (req,res)=>{
-    return res.render('dash-my-order',{
-        data: req.auth,
-      });
-    }
+  '/dashboard/orders',
+  AuthValidator.validateToken,
+  async (req, res,next) => {
+    const {count, rows} = await CustomerController.getOrders(req,res,next);
+    return res.render('dash-my-order', {
+      data: req.auth,
+      orders: rows,
+    });
+  }
 );
 
 
@@ -131,7 +144,7 @@ customerRouter.get(
 
 customerRouter.post(
   // '/customers',
-  '/signup', 
+  '/signup',
   // (req,res)=>{
   //   console.log("Params ====================");
   //   const j = InputValidator.signUpValidator();

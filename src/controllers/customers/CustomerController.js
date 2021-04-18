@@ -1,5 +1,6 @@
 const CustomerService = require('../../services/CustomerService');
 const JwtHelper = require('../../helpers/JwtHelper');
+const OrderService = require('../../services/OrderService');
 
 class CustomerController {
   static async signUp(req, res, next) {
@@ -7,27 +8,12 @@ class CustomerController {
       const { body } = req;
       const [user, created] = await CustomerService.findOrCreateUser(body);
 
-      if (!created) {
-        // return res.status(409).send({
-        //   error: {
-        //     code: 'USR_04',
-        //     message: 'User already exists with this email address'
-        //   }
-        // });
-        return next();
-      }
+      if (!created) return next();
 
       const customer = user.toJSONData();
       const expiresIn = '1h';
-      const accessToken = JwtHelper.generateToken({ data: customer, expiresIn });
+      // const accessToken = JwtHelper.generateToken({ data: customer, expiresIn });
 
-
-
-      // return res.status(201).send({
-      //   customer: user.toJSONData(),
-      //   accessToken,
-      //   expires_in: expiresIn
-      // });
       return res.redirect('/signin');
     } catch (error) {
       return next(error);
@@ -40,38 +26,16 @@ class CustomerController {
       const user = await CustomerService.findUser(body);
       const isPasswordMatch = user ? user.checkPassword(body.password, user.toJSON().password) : user;
 
-      if (!isPasswordMatch) {
-        // return res.status(409).send({
-        //   error: {
-        //     message: 'Invalid credentials'
-        //   }
-        // });
-        return next();
-      }
+      if (!isPasswordMatch) return next();
 
       const customer = user.toJSONData();
       const expiresIn = '1h';
       req.session.token = null;
-
-      console.log(user);
-      
       const accessToken = JwtHelper.generateToken({ data: customer, expiresIn });
-      console.log("Logging In...");
-      // const authToken = accessToken.split('Bearer ')[1];
-      // const decoded = JwtHelper.decodeToken(authToken);
-
-      // console.log(decoded);
-
       req.session.token = accessToken;
 
-      // return res.status(200).send({
-      //   customer,
-      //   accessToken,
-      //   expires_in: expiresIn
-      // });
       return res.redirect('/dashboard');
     } catch (error) {
-      // return next(error);
       next();
     }
   }
@@ -93,6 +57,15 @@ class CustomerController {
     } catch (error) {
       return next(error);
     }
+  }
+  static async getOrders(req, res, next) {
+    try {
+      const { decoded } = req;
+      return OrderService.fetchOrders({ customer_id: decoded.customer_id });
+    } catch (error) {
+      return [];
+    }
+
   }
 }
 

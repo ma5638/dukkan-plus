@@ -10,7 +10,6 @@ const orderRouter = express.Router();
 
 orderRouter.post(
   '/orders',
-  
   AuthValidator.validateToken,
   ErrorValidator.check,
   InputValidator.checkoutValidator(),

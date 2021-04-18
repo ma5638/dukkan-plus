@@ -35,6 +35,14 @@ class OrderService {
     HttpError.throwErrorIfNullOrEmpty(orderDetails, 'Order not found');
     return orderDetails;
   }
+
+  static async fetchOrders({customer_id}){
+    const orderDetails = await orders.findAndCountAll({
+      where: { customer_id },
+      include: [order_detail]
+    });
+    return orderDetails;
+  }
 }
 
 module.exports = OrderService;
