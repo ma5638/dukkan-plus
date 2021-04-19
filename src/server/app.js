@@ -56,9 +56,12 @@ app.set('views', path.join(__dirname, '../views'));
 // });
 
 
-// app.get('/checkout', (req, res) => {
-//   res.render('index');
-// });
+app.get('/test', (req, res) => {
+  loggedIn = true;
+  res.render('nav',{
+    loggedIn
+  });
+});
 
 routes(app);
 
