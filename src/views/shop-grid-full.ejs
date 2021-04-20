@@ -1484,23 +1484,11 @@
 
                                     <!--====== Pagination ======-->
                                     <ul class="shop-p__pagination">
-                                        <% for(i=1; i<maxPage; i++){   %>
-                                        <li class="is-active">
-                                            <a href="/products?page=<%= i %>"><%=i%></a>
-                                        </li>
+                                        <% for(i = 1; i<maxPage; i++){ %>
+                                            <li class = "is-active">
+                                                <a href="/products?page=<%= i %>"><%=i%></a>
+                                            </li>
                                         <% } %>
-
-
-
-                                        <!-- <li>
-
-                                            <a href="shop-grid-full.html">2</a></li>
-                                        <li>
-
-                                            <a href="shop-grid-full.html">3</a></li>
-                                        <li>
-
-                                            <a href="shop-grid-full.html">4</a></li> -->
                                     </ul>
                                     <!--====== End - Pagination ======-->
                                 </div>
