@@ -9,15 +9,16 @@ class ProductController {
         query: { page, limit, description_length }
       } = req;
       const requiredPage = page || 1;
-      const requiredLimit = limit || 20;
+      const requiredLimit = limit || 10;
       const descriptionLength = description_length || 200;
 
-      const { rows } = await ProductService.fetchAndCountProducts({
+      const { count, rows } = await ProductService.fetchAndCountProducts({
         page: requiredPage,
         limit: requiredLimit
       });
       // ------------------------
       // Count is always 100. Why???
+      const maxPage = Math.ceil(count/requiredLimit);
       console.log(rows);
 
       const products = await ProductHelpers.formatData(rows, descriptionLength);
@@ -28,7 +29,8 @@ class ProductController {
       // console.log(products);
 
       return res.render("shop-grid-full",{
-        products
+        products,
+        maxPage
       });
 
       // return {count, rows:products};
