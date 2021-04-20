@@ -10,14 +10,18 @@ class OrderService {
     total_amount,
     customer_id,
     cart,
-    cart_id
+    cart_id,
+    shipping_address_id,
+    billing_address_id
   }) {
     const created_on = Date.now();
 
     const orderInfo = await orders.create({
       total_amount,
       customer_id,
-      created_on
+      created_on,
+      shipping_address_id,
+      billing_address_id
     });
 
     await OrderDetailService.bulkCreateOrderDetail({ cart, orderInfo });

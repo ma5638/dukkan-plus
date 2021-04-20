@@ -21,6 +21,14 @@ orderRouter.post(
   StripController.handlePayment,
 );
 
+orderRouter.post(
+  '/orders/end',
+  AuthValidator.validateToken,
+  (req,res)=>{
+    return res.redirect('/dashboard/orders');
+  }
+)
+
 orderRouter.get(
   '/orders/:order_id',
   AuthValidator.validateToken,

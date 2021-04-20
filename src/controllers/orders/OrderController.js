@@ -2,12 +2,14 @@ const ShoppingCartService  = require('../../services/ShoppingCartService');
 const OrderService = require('../../services/OrderService');
 const ErrorHandler = require('../../helpers/ErrorHandler');
 
-const paymentOptions = ["cash", "card", "paypal"]
+const paymentOptions = ["cash", "card"]
 
 class OrderController {
   static async create(req, res, next) {
     try {
-      const { body:{ payment },session: { cartId }, decoded: { customer_id } } = req;
+      const { body:{ payment, shipping_address_id, billing_address_id },session: { cartId }, decoded: { customer_id } } = req;
+
+      console.log(req.body);
 
       if(!paymentOptions.includes(payment)) return ErrorHandler.sendErrorResponse({
         error: {
@@ -36,6 +38,8 @@ class OrderController {
         cart,
         cart_id: cartId,
         total_amount: subTotal,
+        shipping_address_id,
+        billing_address_id
       });
 
       // const result = await StripController.handlePayment(req,res,next);
@@ -45,6 +49,9 @@ class OrderController {
       //   // result
       // });
       req.body.order_id = newOrder.order_id;
+      console.log("=======================")
+      console.log(payment);
+      if(payment == "cash") return res.redirect(307, '/orders/end');
       return next();
     } catch (error) {
       next(error);

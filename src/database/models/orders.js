@@ -49,11 +49,16 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
       comment: 'null'
     },
-    // shipping_id: {
-    //   type: DataTypes.INTEGER(11),
-    //   allowNull: true,
-    //   comment: 'null'
-    // },
+    shipping_address_id: {
+      type: DataTypes.INTEGER(11),
+      allowNull: false,
+      comment: 'null'
+    },
+    billing_address_id: {
+      type: DataTypes.INTEGER(11),
+      allowNull: false,
+      comment: 'null'
+    },
     // tax_id: {
     //   type: DataTypes.INTEGER(11),
     //   allowNull: true,

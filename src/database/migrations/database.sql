@@ -89,6 +89,9 @@ CREATE TABLE `orders` (
   `customer_id`  INT,
   `auth_code`    VARCHAR(50),
   `reference`    VARCHAR(50),
+  `shipping_address_id`  INT   NOT NULL,
+  `billing_address_id`  INT    NOT NULL,
+
   -- `shipping_id`  INT,
   -- `tax_id`       INT,
   PRIMARY KEY  (`order_id`),
@@ -218,7 +221,6 @@ CREATE TABLE `address` (
 --        (3, 'Seasonal', 'Each time of the year has a special flavor. Our seasonal T-shirts express traditional symbols using unique postal stamp pictures.');
 
 -- Populate category table
-DELETE FROM `category` WHERE category_id>=1;
 INSERT INTO `category` (`category_id`,`name`, `description`) VALUES
 		(1,'Vegetables', 
        'Build towards a healthy lifestyle with our fresh vegetables!'),
@@ -228,7 +230,6 @@ INSERT INTO `category` (`category_id`,`name`, `description`) VALUES
 			   'In a rush? Fear nothing as these portable and convenient foods got your back!');
 
 -- Populate product table
-DELETE FROM `dukkan-plus`.product WHERE product_id>=1;
 
 INSERT INTO `product` (`product_id`, `name`, `description`, `price`, `discounted_price`, `image`,`display`) VALUES
        (1, 'Iceberg Lettuce', 'Add the crunchy green flavor and enrichen your life.', 5.99, 4.99, 'Iceberg Lettuce.jpg', 0),
@@ -347,7 +348,6 @@ INSERT INTO `product` (`product_id`, `name`, `description`, `price`, `discounted
 --        (101, 'The Promise of Spring', 'With Valentine''s Day come, can Spring be far behind?', 21.00, 19.50, 'the-promise-of-spring.gif', 'the-promise-of-spring-2.gif', 'the-promise-of-spring-thumbnail.gif', 0);
 
 -- Populate product_category table
-DELETE FROM `product_category` WHERE product_id>=1;
 INSERT INTO `product_category` (`product_id`, `category_id`) VALUES
        (1, 1),(2,1),(3,1),(4,2),(5,2),(6,2),(7,3),(8,3),(9,3);
 -- INSERT INTO `product_category` (`product_id`, `category_id`) VALUES

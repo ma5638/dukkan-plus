@@ -58,6 +58,7 @@ app.set('views', path.join(__dirname, '../views'));
 
 app.get('/test', (req, res) => {
   loggedIn = true;
+
   res.render('nav',{
     loggedIn
   });

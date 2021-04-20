@@ -47,14 +47,21 @@ customerRouter.get(
   }
 );
 
+customerRouter.get(
+  '/signout', (req, res) => {
+    req.session.token = null;
+    return res.redirect('/signin');
+  }
+);
+
 
 // COMMENT THIS OUT LATER
 // LAZY SIGN IN
 customerRouter.get(
-  '/devsignin', (req, res, next) => {
+  '/dev', async (req, res, next) => {
     req.body.email = "test@hotmail.com";
     req.body.password = "password123";
-    return CustomerController.login(req,res,next);
+    return await CustomerController.login(req,res,next);
   }
 );
 
@@ -119,6 +126,69 @@ customerRouter.post(
 );
 
 customerRouter.get(
+  '/dashboard/address',
+  AuthValidator.validateToken,
+  async (req, res,next) => {
+    const addresses = await CustomerController.getAddresses(req,res);
+    return res.render('dash-address-book', {
+      data: req.auth,
+      addresses
+    });
+  }
+);
+
+customerRouter.get(
+  '/dashboard/address/add',
+  AuthValidator.validateToken,
+  async (req, res,next) => {
+    return res.render('dash-address-add', {
+      data: req.auth
+    });
+  }
+);
+
+customerRouter.post(
+  '/dashboard/address/add',
+  AuthValidator.validateToken,
+  InputValidator.addressValidator(),
+  ErrorValidator.check,
+  CustomerController.createAddress,
+);
+
+
+
+// customerRouter.put(
+//   '/customers/address',
+//   AuthValidator.validateToken,
+//   InputValidator.addressValidator(),
+//   ErrorValidator.check,
+//   HelperUtility.filterRequestBody,
+//   CustomerController.updateCustomer
+// );
+
+customerRouter.get(
+  '/dashboard/address/:addressid/edit',
+  AuthValidator.validateToken,
+  CustomerController.getOneAddress,  
+);
+
+customerRouter.post(
+  '/dashboard/address/:addressid/edit',
+  AuthValidator.validateToken,
+  InputValidator.addressValidator(),
+  ErrorValidator.check,
+  CustomerController.updateAddress,
+);
+
+customerRouter.post(
+  '/dashboard/address/remove',
+  AuthValidator.validateToken,
+  InputValidator.addressIdValidator(),
+  ErrorValidator.check,
+  CustomerController.removeAddress,
+);
+
+customerRouter.get(
   '/dashboard/orders',
   AuthValidator.validateToken,
   async (req, res,next) => {
@@ -173,13 +243,6 @@ customerRouter.put(
   CustomerController.updateCustomer
 );
 
-customerRouter.put(
-  '/customers/address',
-  AuthValidator.validateToken,
-  InputValidator.addressValidator(),
-  ErrorValidator.check,
-  HelperUtility.filterRequestBody,
-  CustomerController.updateCustomer
-);
+
 
 module.exports = customerRouter;

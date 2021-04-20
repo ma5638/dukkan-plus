@@ -25,7 +25,7 @@ class CategoryController{
             //   rows: products
             // });
             return res.render("shop-grid-full-categories",{
-                categories
+                categories,
             });
 
             // return {count, rows:products};

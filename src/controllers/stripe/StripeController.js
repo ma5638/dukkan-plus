@@ -43,7 +43,8 @@ class StripeController {
 
       // await EmailUtil.sendConfirmationMail({ email });
       
-      return res.status(200).send(result);
+      // return res.status(200).send(result);
+      return res.redirect(307, '/orders/end');
     } catch (error) {
       next(error);
     }

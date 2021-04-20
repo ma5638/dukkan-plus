@@ -1,5 +1,6 @@
 const ShoppingCartService  = require('../../services/ShoppingCartService');
 // const ShoppingCartHelper  = require('../../services/ShoppingCartHelper');
+const AddressService = require('../../services/AddressService');
 const ProductService = require('../../services/ProductService');
 const HttpError = require('../../helpers/ErrorHandler');
 
@@ -82,18 +83,17 @@ class ShoppingController {
     }
   }
   static async showCheckout(req,res,next){
-    console.log("Begninning///");
     try {
-      const { session: { cartId } } = req;
+      
+      const { session: { cartId }, decoded } = req;
 
       const shoppingCart = await ShoppingCartService.fetchShoppingCart(cartId);
+      const { rows } =  await AddressService.findAllAddress({ customer_id: decoded.customer_id });
 
-      // return res.status(200).send(shoppingCart);
 
-      // console.log(shoppingCart);
-      console.log("CHECKING OUT");
       return res.render("checkout",{
-        shoppingCart
+        shoppingCart,
+        addresses: rows
       });
 
     } catch (error) {

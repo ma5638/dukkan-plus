@@ -1,6 +1,8 @@
 const CustomerService = require('../../services/CustomerService');
+const AddressService = require('../../services/AddressService');
 const JwtHelper = require('../../helpers/JwtHelper');
 const OrderService = require('../../services/OrderService');
+const { body } = require('express-validator/check');
 
 class CustomerController {
   static async signUp(req, res, next) {
@@ -24,8 +26,9 @@ class CustomerController {
     try {
       const { body } = req;
       const user = await CustomerService.findUser(body);
-      const isPasswordMatch = user ? user.checkPassword(body.password, user.toJSON().password) : user;
+      const isPasswordMatch = user ? await user.checkPassword(body.password, user.toJSON().password) : user;
 
+      console.log(isPasswordMatch);
       if (!isPasswordMatch) return next();
 
       const customer = user.toJSONData();
@@ -61,12 +64,90 @@ class CustomerController {
   static async getOrders(req, res, next) {
     try {
       const { decoded } = req;
-      return OrderService.fetchOrders({ customer_id: decoded.customer_id });
+      return await OrderService.fetchOrders({ customer_id: decoded.customer_id });
     } catch (error) {
       return [];
     }
 
   }
+  static async getAddresses(req,res){
+    try {
+      const { decoded } = req;
+      const { rows } =  await AddressService.findAllAddress({ customer_id: decoded.customer_id });
+      return rows;
+    } catch (error) {
+      return [];
+    }
+  }
+
+  static async getOneAddress(req,res,next){
+    try{
+
+      const { decoded, params } = req;
+
+
+      const address = await AddressService.findAddressWithId({
+        customer_id: decoded.customer_id, 
+        address_id: params.addressid
+      });
+  
+      if(!address) return res.redirect('/dashboard/address');
+
+      return res.render('dash-address-edit', {
+        data: req.auth,
+        address
+      });
+    } catch(error){
+      return next(error);
+    }
+  }
+
+  static async createAddress(req,res,next){
+    try {
+      const { decoded } = req;
+      await AddressService.addAddress({body: req.body, customer_id: decoded.customer_id });
+      return res.redirect('/dashboard/address');
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async updateAddress(req,re,nexts){
+    try {
+      const { body, decoded, params } = req;
+
+      // Validate Address belongs to Customer
+
+      const addresses = AddressService.findAddressWithId({
+        customer_id: decoded.customer_id, 
+        address_id: params.addressid
+      });
+
+      if(addresses.length==0) return res.redirect('/dashboard/address');
+
+      // Update Address
+
+      await AddressService.updateAddress({
+        body, 
+        customer_id: decoded.customer_id, 
+        address_id: params.addressid
+       });
+      return res.redirect('/dashboard/address');
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async removeAddress(req,res,next){
+    try {
+      const { body, decoded } = req;
+      await AddressService.removeAddress({ customer_id: decoded.customer_id, address_id: body.address_id });
+      return res.redirect('/dashboard/address');
+    } catch (error) {
+      return next(error);
+    }
+  }
+
 }
 
 module.exports = CustomerController;
