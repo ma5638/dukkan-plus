@@ -1,4 +1,4 @@
-
+const adminRouter = require('../routes/admin.router');
 const express = require('express');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
@@ -7,6 +7,8 @@ const session = require('express-session');
 const sequelizeStore = require('connect-session-sequelize');
 const morgan = require('morgan');
 const path = require('path');
+
+
 
 const db = require('../database/models');
 const routes = require('../routes');
@@ -30,6 +32,9 @@ app.use(morgan('dev'));
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+app.use('/admin', adminRouter)
+app.use(bodyParser.json())
 
 app.use(session({
   secret: secret,
