@@ -33,11 +33,16 @@ class CustomerController {
 
       const customer = user.toJSONData();
       const expiresIn = '1h';
-      req.session.token = null;
+      // req.session.token = null;
       const accessToken = JwtHelper.generateToken({ data: customer, expiresIn });
       req.session.token = accessToken;
+      // req.token = accessToken;
+      req.session.save( err => {
+        if(err) throw err;
+        return res.redirect('/dashboard');
+      });
 
-      return res.redirect('/dashboard');
+      // return res.redirect('/dashboard');
     } catch (error) {
       next();
     }
@@ -54,9 +59,14 @@ class CustomerController {
       const accessToken = JwtHelper.generateToken({ data: user, expiresIn });
       req.session.token = accessToken;
 
+      req.session.save(err=>{
+        if(err) throw err;
+        return res.redirect('/dashboard');
+      });
+
       // return res.status(200).send(user);
       // return res.redirect('/dashboard/editprofile');
-      return res.redirect('/dashboard');
+      
     } catch (error) {
       return next(error);
     }

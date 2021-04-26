@@ -4,7 +4,7 @@ class AuthValidator {
   static validateToken(req, res, next) {
     try {
       // const token = req.headers['user-key'];
-      const token = req.session.token || null;
+      const token = req.session.token? req.session.token : req.token;
 
       // Token means that the customer is logged in
       if (!token) {

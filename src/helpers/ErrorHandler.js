@@ -21,10 +21,11 @@ class HttpError extends Error {
 
     const code = error.statusCode || 500;
     const { message } = error;
-    return res.status(code).json({
-      success: false,
-      message,
-    });
+    // return res.status(code).json({
+    //   success: false,
+    //   message,
+    // });
+    return res.render('404');
   }
 }
 
