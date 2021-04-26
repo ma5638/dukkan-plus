@@ -37,5 +37,11 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false
   });
 
+  review.associate = (models) => {
+    review.belongsTo(models.customer, {
+      foreignKey: 'customer_id'
+    });
+  };
+
   return review;
 };

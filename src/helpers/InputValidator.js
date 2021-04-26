@@ -200,6 +200,15 @@ class InputValidator {
       ...InputValidator.integerValidator('item_id'),
     ];
   }
+
+  static reviewValidator(){
+    return[
+      sanitizeBody('review', 'rating').trim(),
+      ...InputValidator.integerValidator('rating'),
+      ...InputValidator.stringValidator('review')
+    ]
+  }
+
 }
 
 module.exports = InputValidator;

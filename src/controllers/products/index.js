@@ -1,6 +1,8 @@
 const express = require('express');
 const ProductController = require('./ProductController');
 const ProductValidator = require('../../middleware/ProductValidator');
+const InputValidator = require('../../helpers/InputValidator');
+const AuthValidator = require('../../middleware/AuthValidator');
 const productRouter = express.Router();
 
 // Get all products
@@ -21,6 +23,14 @@ productRouter.get(
   ProductValidator.validateParamId,
   ProductController.getProductDetails
 );
+
+productRouter.post(
+  '/products/:product_id/submitReview',
+  AuthValidator.validateToken,
+  ProductValidator.validateParamId,
+  InputValidator.reviewValidator(),
+  ProductController.createOrUpdateReview
+)
 
 
 // Get products by category
