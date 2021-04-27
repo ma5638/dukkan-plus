@@ -90,7 +90,10 @@ app.use((err, req, res, next) => {
 
 app.use(express.static(path.join(__dirname, '../../static')));    // Static files are loaded here e.g. .css and .js
 
-app.all('*', (req, res) => res.render('404'));
+app.all('*', (req, res) => res.render('layout', {
+  template: '404',
+  data: req.auth
+}));
 // app.all('*', (req, res) => res.status(404).send({ message: 'Route not found' }));
 
 

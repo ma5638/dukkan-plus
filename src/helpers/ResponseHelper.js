@@ -4,7 +4,10 @@ class ResponseHelper {
     // return res.status(code).json({
     //   ...data,
     // });
-    return res.render("404");
+    return res.render('layout', {
+      template: '404',
+      data: req.auth
+    });
   }
 }
 

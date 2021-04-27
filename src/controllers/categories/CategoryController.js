@@ -18,14 +18,19 @@ class CategoryController{
             limit: requiredLimit
             });
 
+            const maxPage = Math.ceil(count/requiredLimit);
+
             // Supposed to be ProductHelpers lol
             const categories = await CategoryService.formatData(rows, descriptionLength);
             // return res.status(200).send({
             //   count,
             //   rows: products
             // });
-            return res.render("shop-grid-full-categories",{
+            return res.render("layout",{
+                template: "shop-grid-full-categories",
+                data: req.auth,
                 categories,
+                maxPage
             });
 
             // return {count, rows:products};

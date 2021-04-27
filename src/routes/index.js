@@ -37,7 +37,9 @@ const routes = (app) => {
   // Home Page
   app.get('/',(req,res)=>{
     pageTitle = "Home Page | Dukkan";
-    return res.render('index',{
+    return res.render('layout',{
+      template: 'index',
+      data: req.auth,
       pageTitle
     });
   });

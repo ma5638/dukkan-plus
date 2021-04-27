@@ -74,7 +74,9 @@ class ShoppingController {
       // return res.status(200).send(shoppingCart);
 
       // console.log(shoppingCart);
-      return res.render("cart",{
+      return res.render("layout",{
+        template: "cart",
+        data: req.auth,
         shoppingCart
       });
 
@@ -91,7 +93,9 @@ class ShoppingController {
       const { rows } =  await AddressService.findAllAddress({ customer_id: decoded.customer_id });
 
 
-      return res.render("checkout",{
+      return res.render("layout",{
+        template: "checkout",
+        data: req.auth,
         shoppingCart,
         addresses: rows
       });

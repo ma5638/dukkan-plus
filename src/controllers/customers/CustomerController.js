@@ -103,7 +103,8 @@ class CustomerController {
   
       if(!address) return res.redirect('/dashboard/address');
 
-      return res.render('dash-address-edit', {
+      return res.render("layout",{
+        template: 'dash-address-edit',
         data: req.auth,
         address
       });

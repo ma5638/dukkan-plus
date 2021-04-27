@@ -25,7 +25,10 @@ class HttpError extends Error {
     //   success: false,
     //   message,
     // });
-    return res.render('404');
+    return res.render('layout', {
+      template: '404',
+      data: req.auth
+    });
   }
 }
 

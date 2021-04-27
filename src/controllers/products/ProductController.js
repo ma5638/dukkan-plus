@@ -20,7 +20,9 @@ class ProductController {
       const maxPage = Math.ceil(count/requiredLimit);
 
       const products = await ProductHelpers.formatData(rows, descriptionLength);
-      return res.render("shop-grid-full",{
+      return res.render("layout",{
+        template: "shop-grid-full",
+        data: req.auth,
         products,
         maxPage
       });
@@ -118,7 +120,8 @@ class ProductController {
 
       if (!product) return next();
       
-      return res.render('product-detail',{
+      return res.render('layout',{
+        template: 'product-detail',
         product,
         reviews: rows,
         data: req.auth,

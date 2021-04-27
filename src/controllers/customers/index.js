@@ -37,31 +37,34 @@ const customerRouter = express.Router();
 
 customerRouter.get(
   '/signup', (req, res) => {
-    return res.render('signup');
+    return res.render("layout",{
+      template: "signup",
+      data: req.auth,
+    });
   }
 );
 
 customerRouter.get(
   '/signin', (req, res) => {
-    return res.render('signin');
+    return res.render("layout",{
+      template: "signin",
+      data: req.auth,
+    });
   }
 );
 
 customerRouter.get(
-  '/signout', (req, res) => {
-    req.session.token = null;
-    return res.redirect('/signin');
-  }
-);
+  '/signout', async (req, res) => {
+    try{
+      req.session.token = null;
+      req.session.save(err=>{
+        if(err) throw err;
+        return res.redirect('signin');
+      });
+    } catch(error){
+      return next(error);
+    }
 
-
-// COMMENT THIS OUT LATER
-// LAZY SIGN IN
-customerRouter.get(
-  '/dev', async (req, res, next) => {
-    req.body.email = "test@hotmail.com";
-    req.body.password = "password123";
-    return await CustomerController.login(req,res,next);
   }
 );
 
@@ -78,7 +81,8 @@ customerRouter.get(
   AuthValidator.validateToken,
   (req, res) => {
     // if(!req.auth) return next();
-    return res.render('dashboard', {
+    return res.render("layout",{
+      template: "dashboard",
       data: req.decoded,
     });
   }
@@ -88,7 +92,8 @@ customerRouter.get(
   '/dashboard/profile',
   AuthValidator.validateToken,
   (req, res) => {
-    return res.render('dash-my-profile', {
+    return res.render("layout",{
+      template: 'dash-my-profile',
       data: req.decoded,
     });
   }
@@ -98,7 +103,8 @@ customerRouter.get(
   '/dashboard/editprofile',
   AuthValidator.validateToken,
   (req, res) => {
-    return res.render('dash-edit-profile', {
+    return res.render("layout",{
+      template: 'dash-edit-profile',
       data: req.decoded,
     });
   }
@@ -130,8 +136,9 @@ customerRouter.get(
   AuthValidator.validateToken,
   async (req, res,next) => {
     const addresses = await CustomerController.getAddresses(req,res);
-    return res.render('dash-address-book', {
-      data: req.auth,
+    return res.render("layout",{
+      template: 'dash-address-book',
+      data: req.decoded,
       addresses
     });
   }
@@ -141,7 +148,8 @@ customerRouter.get(
   '/dashboard/address/add',
   AuthValidator.validateToken,
   async (req, res,next) => {
-    return res.render('dash-address-add', {
+    return res.render("layout",{
+      template: 'dash-address-add',
       data: req.auth
     });
   }
@@ -193,7 +201,8 @@ customerRouter.get(
   AuthValidator.validateToken,
   async (req, res,next) => {
     const {count, rows} = await CustomerController.getOrders(req,res,next);
-    return res.render('dash-my-order', {
+    return res.render("layout",{
+      template: 'dash-my-order',
       data: req.auth,
       orders: rows,
     });
@@ -213,7 +222,6 @@ customerRouter.get(
 // );
 
 customerRouter.post(
-  // '/customers',
   '/signup',
   // (req,res)=>{
   //   console.log("Params ====================");

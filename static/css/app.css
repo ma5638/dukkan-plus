@@ -3729,7 +3729,7 @@ input::-ms-clear {
 .manage-o__badge {
   display: inline-block;
   text-align: center;
-  width: 5.9375rem;
+  /* width: 5.9375rem; */
   padding: 8px;
   font-size: 13px;
   font-weight: 600;
