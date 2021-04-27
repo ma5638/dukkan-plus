@@ -11,11 +11,8 @@ class OrderController {
 
       console.log(req.body);
 
-      if(!paymentOptions.includes(payment)) return ErrorHandler.sendErrorResponse({
-        error: {
-          message: "Payment option not selected",
-        }
-      }, res);
+      if(!paymentOptions.includes(payment)) return ErrorHandler.next(
+          "Payment option not selected");
 
       const [cart] = await Promise.all([
         ShoppingCartService.fetchShoppingCart(cartId),

@@ -14,21 +14,18 @@ class HttpError extends Error {
   }
 
   static sendErrorResponse(error, res) {
-    if (error instanceof HttpError) {
-      const { statusCode, message } = error;
-      return ResponseHelper.sendResponse(res, statusCode, false, message);
-    }
+    // if (error instanceof HttpError) {
+    //   const { statusCode, message } = error;
+    //   return ResponseHelper.sendResponse(res, statusCode, false, message);
+    // }
 
     const code = error.statusCode || 500;
     const { message } = error;
-    // return res.status(code).json({
-    //   success: false,
-    //   message,
-    // });
-    return res.render('layout', {
-      template: '404',
-      data: req.auth
+    return res.status(code).json({
+      success: false,
+      message,
     });
+    // return next(error);
   }
 }
 

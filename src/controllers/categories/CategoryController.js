@@ -4,7 +4,7 @@ const CategoryService = require('../../services/CategoryService');
 const HttpError = require('../../helpers/ErrorHandler');
 
 class CategoryController{
-    static async getAllCategories(req, res) {
+    static async getAllCategories(req, res, next) {
         try {
             const {
             query: { page, limit, description_length }
@@ -35,7 +35,7 @@ class CategoryController{
 
             // return {count, rows:products};
         } catch (error) {
-            return HttpError.sendErrorResponse(error, res);
+            return next(error);
         //   return {count:-1, rows:HttpError.sendErrorResponse(error, res)};
         }
     }

@@ -4,6 +4,7 @@ class ProductHelpers {
   }
 
   static formatData(data, descriptionLength) {
+    console.log("Her");
     return data.map((product) => {
       const {
         product_id, name, description, price, discounted_price, image, Category

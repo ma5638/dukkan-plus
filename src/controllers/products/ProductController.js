@@ -4,7 +4,7 @@ const ProductHelpers = require('../../helpers/ProductHelpers');
 const HttpError = require('../../helpers/ErrorHandler');
 
 class ProductController {
-  static async getAllProducts(req, res) {
+  static async getAllProducts(req, res, next) {
     try {
       const {
         query: { page, limit, description_length }
@@ -19,7 +19,12 @@ class ProductController {
       });
       const maxPage = Math.ceil(count/requiredLimit);
 
-      const products = await ProductHelpers.formatData(rows, descriptionLength);
+      let products = [];
+
+      if(rows.length>0){
+        products = await ProductHelpers.formatData(rows, descriptionLength);
+      }
+
       return res.render("layout",{
         template: "shop-grid-full",
         data: req.auth,
@@ -27,11 +32,11 @@ class ProductController {
         maxPage
       });
     } catch (error) {
-      return HttpError.sendErrorResponse(error, res);
+      return next(error);
     }
   }
 
-  static async getProductsByCategory(req, res) {
+  static async getProductsByCategory(req, res, next) {
     try {
       const {
         params: { category_id },
@@ -47,27 +52,28 @@ class ProductController {
         category_id
       });
 
-      if (rows && rows.length < 1) {
-        return res.status(200).json({
-          message: 'There are no products in this category',
-          count,
-          rows
-        });
+      const maxPage = Math.ceil(count/requiredLimit);
+
+      let products = [];
+
+      if(rows.length>0){
+        products = await ProductHelpers.formatData(rows, descriptionLength);
       }
 
-      const products = await ProductHelpers.formatData(rows, descriptionLength);
-      return res.status(200).send({
-        count,
-        rows: products
+      return res.render("layout",{
+        template: "shop-grid-full",
+        data: req.auth,
+        products,
+        maxPage
       });
     } catch (error) {
-      return HttpError.sendErrorResponse(error, res);
+      return next(error);
     }
   }
 
-  static async getProductsBySearchString(req, res) {
+  static async getProductsBySearchString(req, res, next) {
     try {
-      let {     // converted const to let because had to change query_string later
+      const {     // converted const to let because had to change query_string later
         query: {
           page, limit, description_length, query_string
         }
@@ -75,7 +81,6 @@ class ProductController {
       const requiredPage = page || 1;
       const requiredLimit = limit || 20;
       const descriptionLength = description_length || 200;
-
       const { rows, count } = await ProductService.fetchProductsBySearchKeyword(
         {
           page: requiredPage,
@@ -84,16 +89,23 @@ class ProductController {
         }
       );
 
-      const products = await ProductHelpers.formatData(rows, descriptionLength);
+      const maxPage = Math.ceil(count/requiredLimit);
 
-      // return proper webpage instead here
+      let products = [];
+
+      if(rows.length>0){
+        products = await ProductHelpers.formatData(rows, descriptionLength);
+      }
       
-      return res.status(200).send({
-        count,
-        rows: products
+      return res.render("layout",{
+        template: "shop-grid-full",
+        data: req.auth,
+        products,
+        maxPage
       });
     } catch (error) {
-      return HttpError.sendErrorResponse(error, res);
+      // return HttpError.sendErrorResponse(error, res);
+      return next(error);
     }
   }
 
@@ -128,7 +140,7 @@ class ProductController {
         customer_review
       });
     } catch (error) {
-      return HttpError.sendErrorResponse(error, res);
+      return next(error);
     }
   }
 
