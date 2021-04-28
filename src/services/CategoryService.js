@@ -23,6 +23,16 @@ class CategoryService {
 
         return result;
     }
+
+    static async fetchCategory(category_id){
+        const result = await category.findOne({
+            where: {
+                category_id
+            }
+        });
+        return result;
+    }
+
     static formatData(data, descriptionLength) {
         return data.map((category) => {
             const {
