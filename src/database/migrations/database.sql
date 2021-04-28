@@ -243,9 +243,9 @@ INSERT INTO `product` (`product_id`, `name`, `description`, `price`, `discounted
        (7, 'Kidney Beans', 'Kidney beans, boiled and preserved. From the can, to your salad! ', 5.99, 4.99, 'Kidney Beans.jpg', 0),
        (8, 'Tuna', 'Tuna can, from freshwater rivers. ', 5.99, 4.99, 'Tuna.jpg', 0),
        (9, 'Corn', 'Fear no more! We have the classic corn!', 6.99, 5.99, 'Corn.jpg', 0),
-       (10, 'Chicken', 'Halal Chicken from the local farms. Please store in the freezer immediately after delivery in an ice box.', 19.99, 0.00, 'chicken.png', 0),
-       (11, 'Lamb Meat', 'Local produce, fresh and halal. Please store in the freezer immediately after delivery in the ice box. ', 49.99, 0.00, 'lamb meat.png', 0),
-       (12, 'Fish', 'From the local fishermen of Dalma, to your doorstep! Please store in the freezer immediately after delivery in the ice box.', 29.99, 0.00, 'fish.png', 0);
+       (10, 'Chicken', 'Halal Chicken from the local farms. Please store in the freezer immediately after delivery in an ice box.', 0.00, 19.99, 'chicken.png', 0),
+       (11, 'Lamb Meat', 'Local produce, fresh and halal. Please store in the freezer immediately after delivery in the ice box. ', 0.00, 49.99, 'lamb meat.png', 0),
+       (12, 'Fish', 'From the local fishermen of Dalma, to your doorstep! Please store in the freezer immediately after delivery in the ice box.', 0.00, 29.99, 'fish.png', 0);
 
 -- 102
 

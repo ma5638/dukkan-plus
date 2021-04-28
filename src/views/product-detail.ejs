@@ -110,9 +110,9 @@
                             <div>
                                 <div class="pd-detail__inline">
 
-                                    <span class="pd-detail__price">AED <%= product.price %></span>
+                                    <span class="pd-detail__price">AED <%= product.discounted_price %></span>
 
-                                    <del class="pd-detail__del"><%= product.discounted_price == 0.00? '': 'AED' + product.discounted_price %></del>
+                                    <del class="pd-detail__del"><%= product.price == 0.00? '': 'AED' + product.price %></del>
                                 </div>
                             </div>
                             <div class="u-s-m-b-15">
