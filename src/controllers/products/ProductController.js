@@ -1,4 +1,5 @@
 const ProductService = require('../../services/ProductService');
+const CategoryService = require('../../services/CategoryService');
 const ReviewService = require('../../services/ReviewService');
 const ProductHelpers = require('../../helpers/ProductHelpers');
 const HttpError = require('../../helpers/ErrorHandler');
@@ -54,6 +55,8 @@ class ProductController {
         category_id
       });
 
+      const category = await CategoryService.fetchCategory(category_id);
+
       const maxPage = Math.ceil(count/requiredLimit);
 
       let products = [];
@@ -66,7 +69,8 @@ class ProductController {
         template: "shop-grid-full",
         data: req.auth,
         products,
-        maxPage
+        maxPage,
+        category_name: category && category.name? category.name: undefined,
       });
     } catch (error) {
       return next(error);
