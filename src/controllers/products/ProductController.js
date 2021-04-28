@@ -1,53 +1,51 @@
 const ProductService = require('../../services/ProductService');
+const ReviewService = require('../../services/ReviewService');
 const ProductHelpers = require('../../helpers/ProductHelpers');
 const HttpError = require('../../helpers/ErrorHandler');
 
+const DEFAULTLIMIT = 4;
+
 class ProductController {
-  static async getAllProducts(req, res) {
+  static async getAllProducts(req, res, next) {
     try {
       const {
         query: { page, limit, description_length }
       } = req;
       const requiredPage = page || 1;
-      const requiredLimit = limit || 10;
+      const requiredLimit = limit || DEFAULTLIMIT;
       const descriptionLength = description_length || 200;
 
       const { count, rows } = await ProductService.fetchAndCountProducts({
         page: requiredPage,
         limit: requiredLimit
       });
-      // ------------------------
-      // Count is always 100. Why???
       const maxPage = Math.ceil(count/requiredLimit);
-      console.log(rows);
 
-      const products = await ProductHelpers.formatData(rows, descriptionLength);
-      // return res.status(200).send({
-      //   count,
-      //   rows: products
-      // });
-      // console.log(products);
+      let products = [];
 
-      return res.render("shop-grid-full",{
+      if(rows.length>0){
+        products = await ProductHelpers.formatData(rows, descriptionLength);
+      }
+
+      return res.render("layout",{
+        template: "shop-grid-full",
+        data: req.auth,
         products,
         maxPage
       });
-
-      // return {count, rows:products};
     } catch (error) {
-      return HttpError.sendErrorResponse(error, res);
-      // return {count:-1, rows:HttpError.sendErrorResponse(error, res)};
+      return next(error);
     }
   }
 
-  static async getProductsByCategory(req, res) {
+  static async getProductsByCategory(req, res, next) {
     try {
       const {
         params: { category_id },
         query: { page, limit, description_length }
       } = req;
       const requiredPage = page || 1;
-      const requiredLimit = limit || 20;
+      const requiredLimit = limit || DEFAULTLIMIT;
       const descriptionLength = description_length || 200;
 
       const { rows, count } = await ProductService.fetchProductsByCategory({
@@ -56,35 +54,35 @@ class ProductController {
         category_id
       });
 
-      if (rows && rows.length < 1) {
-        return res.status(200).json({
-          message: 'There are no products in this category',
-          count,
-          rows
-        });
+      const maxPage = Math.ceil(count/requiredLimit);
+
+      let products = [];
+
+      if(rows.length>0){
+        products = await ProductHelpers.formatData(rows, descriptionLength);
       }
 
-      const products = await ProductHelpers.formatData(rows, descriptionLength);
-      return res.status(200).send({
-        count,
-        rows: products
+      return res.render("layout",{
+        template: "shop-grid-full",
+        data: req.auth,
+        products,
+        maxPage
       });
     } catch (error) {
-      return HttpError.sendErrorResponse(error, res);
+      return next(error);
     }
   }
 
-  static async getProductsBySearchString(req, res) {
+  static async getProductsBySearchString(req, res, next) {
     try {
-      let {     // converted const to let because had to change query_string later
+      const {     // converted const to let because had to change query_string later
         query: {
           page, limit, description_length, query_string
         }
       } = req;
       const requiredPage = page || 1;
-      const requiredLimit = limit || 20;
+      const requiredLimit = limit || DEFAULTLIMIT;
       const descriptionLength = description_length || 200;
-
       const { rows, count } = await ProductService.fetchProductsBySearchKeyword(
         {
           page: requiredPage,
@@ -93,29 +91,27 @@ class ProductController {
         }
       );
 
-      // Can comment this out
-      // if (rows && rows.length < 1) {
-      //   return res.status(200).json({
-      //     message: 'Sorry no products match your search keyword',
-      //     count,
-      //     rows
-      //   });
-      // }
+      const maxPage = Math.ceil(count/requiredLimit);
 
-      const products = await ProductHelpers.formatData(rows, descriptionLength);
+      let products = [];
 
-      // return proper webpage instead here
+      if(rows.length>0){
+        products = await ProductHelpers.formatData(rows, descriptionLength);
+      }
       
-      return res.status(200).send({
-        count,
-        rows: products
+      return res.render("layout",{
+        template: "shop-grid-full",
+        data: req.auth,
+        products,
+        maxPage
       });
     } catch (error) {
-      return HttpError.sendErrorResponse(error, res);
+      // return HttpError.sendErrorResponse(error, res);
+      return next(error);
     }
   }
 
-  static async getProductDetails(req, res) {
+  static async getProductDetails(req, res, next) {
     try {
       const { params: { product_id } } = req;
 
@@ -125,23 +121,64 @@ class ProductController {
         product.category = product.Category[0];
       }
       
-      console.log(product);
+      const { count, rows } = await ReviewService.fetchAndCountReviews({ product_id });
 
-      if (!product) {
-        // return res.status(200).json({
-        //   message: 'Product not found',
-        // });
-        return next();
+      let customer_review = null;
+
+      if(req.auth){
+        customer_review = await ReviewService.findCustomerReview({
+          customer_id: req.auth.customer_id,
+          product_id
+        });
       }
 
-      // return res.status(200).send({
-      //   ...product
-      // });
-      return res.render('product-detail',{
-        product
+      if (!product) return next();
+      
+      return res.render('layout',{
+        template: 'product-detail',
+        product,
+        reviews: rows,
+        data: req.auth,
+        customer_review
       });
     } catch (error) {
-      return HttpError.sendErrorResponse(error, res);
+      return next(error);
+    }
+  }
+
+  static async createOrUpdateReview(req,res,next){
+    // 
+    try{
+      const { params: { product_id }, body:{ review, rating} } = req;
+      // const { params: { product_id } } = req;
+
+      const customer_id = req.decoded.customer_id;
+      
+      const existing_customer_review = await ReviewService.findCustomerReview( { 
+        customer_id,
+        product_id 
+      });
+      let customer_review;
+      if(existing_customer_review){
+        // If a customer review exists, update
+        customer_review = await ReviewService.updateCustomerReview({
+          customer_id,
+          product_id,
+          review_text: review,
+          rating
+        });
+      } else{
+        // If a customer review does not exist, create
+        customer_review = await ReviewService.createCustomerReview({
+          customer_id,
+          product_id,
+          review_text: review,
+          rating
+        });
+      }
+      return res.redirect(`/products/${product_id}`);
+    } catch(error){
+      return next(error);
     }
   }
 }

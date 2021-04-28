@@ -37,24 +37,34 @@ const customerRouter = express.Router();
 
 customerRouter.get(
   '/signup', (req, res) => {
-    return res.render('signup');
+    return res.render("layout",{
+      template: "signup",
+      data: req.auth,
+    });
   }
 );
 
 customerRouter.get(
   '/signin', (req, res) => {
-    return res.render('signin');
+    return res.render("layout",{
+      template: "signin",
+      data: req.auth,
+    });
   }
 );
 
-
-// COMMENT THIS OUT LATER
-// LAZY SIGN IN
 customerRouter.get(
-  '/devsignin', (req, res, next) => {
-    req.body.email = "test@hotmail.com";
-    req.body.password = "password123";
-    return CustomerController.login(req,res,next);
+  '/signout', async (req, res) => {
+    try{
+      req.session.token = null;
+      req.session.save(err=>{
+        if(err) throw err;
+        return res.redirect('signin');
+      });
+    } catch(error){
+      return next(error);
+    }
+
   }
 );
 
@@ -71,7 +81,8 @@ customerRouter.get(
   AuthValidator.validateToken,
   (req, res) => {
     // if(!req.auth) return next();
-    return res.render('dashboard', {
+    return res.render("layout",{
+      template: "dashboard",
       data: req.decoded,
     });
   }
@@ -81,7 +92,8 @@ customerRouter.get(
   '/dashboard/profile',
   AuthValidator.validateToken,
   (req, res) => {
-    return res.render('dash-my-profile', {
+    return res.render("layout",{
+      template: 'dash-my-profile',
       data: req.decoded,
     });
   }
@@ -91,7 +103,8 @@ customerRouter.get(
   '/dashboard/editprofile',
   AuthValidator.validateToken,
   (req, res) => {
-    return res.render('dash-edit-profile', {
+    return res.render("layout",{
+      template: 'dash-edit-profile',
       data: req.decoded,
     });
   }
@@ -119,14 +132,86 @@ customerRouter.post(
 );
 
 customerRouter.get(
+  '/dashboard/address',
+  AuthValidator.validateToken,
+  async (req, res,next) => {
+    const addresses = await CustomerController.getAddresses(req,res);
+    return res.render("layout",{
+      template: 'dash-address-book',
+      data: req.decoded,
+      addresses
+    });
+  }
+);
+
+customerRouter.get(
+  '/dashboard/address/add',
+  AuthValidator.validateToken,
+  async (req, res,next) => {
+    return res.render("layout",{
+      template: 'dash-address-add',
+      data: req.auth
+    });
+  }
+);
+
+customerRouter.post(
+  '/dashboard/address/add',
+  AuthValidator.validateToken,
+  InputValidator.addressValidator(),
+  ErrorValidator.check,
+  CustomerController.createAddress,
+);
+
+
+
+// customerRouter.put(
+//   '/customers/address',
+//   AuthValidator.validateToken,
+//   InputValidator.addressValidator(),
+//   ErrorValidator.check,
+//   HelperUtility.filterRequestBody,
+//   CustomerController.updateCustomer
+// );
+
+customerRouter.get(
+  '/dashboard/address/:addressid/edit',
+  AuthValidator.validateToken,
+  CustomerController.getOneAddress,  
+);
+
+customerRouter.post(
+  '/dashboard/address/:addressid/edit',
+  AuthValidator.validateToken,
+  InputValidator.addressValidator(),
+  ErrorValidator.check,
+  CustomerController.updateAddress,
+);
+
+customerRouter.post(
+  '/dashboard/address/remove',
+  AuthValidator.validateToken,
+  InputValidator.addressIdValidator(),
+  ErrorValidator.check,
+  CustomerController.removeAddress,
+);
+
+customerRouter.get(
   '/dashboard/orders',
   AuthValidator.validateToken,
   async (req, res,next) => {
-    const {count, rows} = await CustomerController.getOrders(req,res,next);
-    return res.render('dash-my-order', {
+    try{
+      const {count, rows} = await CustomerController.getOrders(req,res,next);
+    // console.log(rows[0].order_details[0].product.Category[0].name);
+    return res.render("layout",{
+      template: 'dash-my-order',
       data: req.auth,
       orders: rows,
     });
+    } catch(error){
+      return next(error);
+    }
+    
   }
 );
 
@@ -143,7 +228,6 @@ customerRouter.get(
 // );
 
 customerRouter.post(
-  // '/customers',
   '/signup',
   // (req,res)=>{
   //   console.log("Params ====================");
@@ -173,13 +257,6 @@ customerRouter.put(
   CustomerController.updateCustomer
 );
 
-customerRouter.put(
-  '/customers/address',
-  AuthValidator.validateToken,
-  InputValidator.addressValidator(),
-  ErrorValidator.check,
-  HelperUtility.filterRequestBody,
-  CustomerController.updateCustomer
-);
+
 
 module.exports = customerRouter;

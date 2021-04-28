@@ -9,15 +9,20 @@ class HttpError extends Error {
 
   static throwErrorIfNullOrEmpty(data, message, code = 404) {
     if (!data || data.length < 1) {
-      throw new HttpError(message, code);
+      // throw new HttpError(message, code);
+      const error = {
+        message,
+        code
+      }
+      throw error;
     }
   }
 
   static sendErrorResponse(error, res) {
-    if (error instanceof HttpError) {
-      const { statusCode, message } = error;
-      return ResponseHelper.sendResponse(res, statusCode, false, message);
-    }
+    // if (error instanceof HttpError) {
+    //   const { statusCode, message } = error;
+    //   return ResponseHelper.sendResponse(res, statusCode, false, message);
+    // }
 
     const code = error.statusCode || 500;
     const { message } = error;
@@ -25,6 +30,7 @@ class HttpError extends Error {
       success: false,
       message,
     });
+    // return next(error);
   }
 }
 

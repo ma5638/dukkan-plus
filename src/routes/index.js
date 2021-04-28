@@ -2,7 +2,6 @@ const products = require('../controllers/products');
 const customers = require('../controllers/customers');
 const shoppingCart = require('../controllers/shoppingCart');
 const orders = require('../controllers/orders');
-// const stripe = require('../controllers/stripe');
 const categories = require('../controllers/categories');
 const path = require('path');
 
@@ -38,7 +37,9 @@ const routes = (app) => {
   // Home Page
   app.get('/',(req,res)=>{
     pageTitle = "Home Page | Dukkan";
-    return res.render('index',{
+    return res.render('layout',{
+      template: 'index',
+      data: req.auth,
       pageTitle
     });
   });

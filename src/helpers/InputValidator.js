@@ -99,19 +99,29 @@ class InputValidator {
   }
 
   static checkoutValidator() {
-    return [
-      sanitizeBody(['card_number', 'cvv', 'exp_date_m', 'exp_date_y']).trim(),
-      body('card_number')
-        .isCreditCard()
-        .withMessage('valid credit_card number is required'),
-      body('cvv')
-        .isInt({ min: 100, max: 999}),
-      body('exp_date_m')
-        .isInt({ min: 1, max: 12}),
-      body('exp_date_m')
-        .isInt({ min: 0, max: 99}),
-      
-    ];
+    if(body('payments').contains('cash')){
+      return [
+        sanitizeBody(['shipping_address_id', 'billing_address_id']).trim(),
+        ...InputValidator.integerValidator('shipping_address_id'),
+        ...InputValidator.integerValidator('billing_address_id'),
+      ];
+    } else{
+      return [
+        sanitizeBody(['card_number', 'cvv', 'exp_date_m', 'exp_date_y', 'shipping_address_id', 'billing_address_id']).trim(),
+        body('card_number')
+          .isCreditCard()
+          .withMessage('valid credit_card number is required'),
+        body('cvv')
+          .isInt({ min: 100, max: 999}),
+        body('exp_date_m')
+          .isInt({ min: 1, max: 12}),
+        body('exp_date_m')
+          .isInt({ min: 0, max: 99}),
+        ...InputValidator.integerValidator('shipping_address_id'),
+        ...InputValidator.integerValidator('billing_address_id'),
+        
+      ];
+    }
   }
 
   static stringValidator(field) {
@@ -142,13 +152,23 @@ class InputValidator {
   }
 
   static addressValidator() {
-    const requiredStringFields = ['address_1', 'city', 'region', 'postal_code', 'country'];
+    const requiredStringFields = ['address_1', 'city', 
+    // 'region', 
+    // 'postal_code', 
+    'country'];
     const validations = requiredStringFields.flatMap(item => InputValidator.stringValidator(item));
     return [
       sanitizeBody([...requiredStringFields, 'address_2']).trim(),
       ...validations,
       ...InputValidator.optionalStringValidator('address_2'),
-      ...InputValidator.integerValidator('shipping_region_id')
+      // ...InputValidator.integerValidator('shipping_region_id')
+    ];
+  }
+
+  static addressIdValidator() {
+    return [
+      sanitizeBody(['address_id']).trim(),
+      ...InputValidator.integerValidator('address_id'),
     ];
   }
 
@@ -180,6 +200,15 @@ class InputValidator {
       ...InputValidator.integerValidator('item_id'),
     ];
   }
+
+  static reviewValidator(){
+    return[
+      sanitizeBody('review', 'rating').trim(),
+      ...InputValidator.integerValidator('rating'),
+      ...InputValidator.stringValidator('review')
+    ]
+  }
+
 }
 
 module.exports = InputValidator;

@@ -41,13 +41,11 @@ class ProductService {
           as: 'Category',
           where: {
             category_id
-          },
-          attributes: []
+          }
         }
       ],
       ...paginationQuery,
-      attributes: productAttributes,
-      raw: true
+      attributes: productAttributes
     });
 
     return products;
@@ -63,13 +61,11 @@ class ProductService {
           as: 'Category',
           where: {
             department_id
-          },
-          attributes: []
+          }
         }
       ],
       ...paginationQuery,
-      attributes: productAttributes,
-      raw: true
+      attributes: productAttributes
     });
 
     return products;
@@ -81,7 +77,12 @@ class ProductService {
     const result = await product.findAndCountAll({
       ...paginationQuery,
       attributes: productAttributes,
-      raw: true,
+      include: [
+        {
+          model: category,
+          as: 'Category',
+        }
+      ],
       where: {
         [Op.or]: [
           {

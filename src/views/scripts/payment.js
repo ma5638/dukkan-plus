@@ -59,7 +59,7 @@ form.addEventListener('submit', async (event) => {
     errorElement.textContent = error.message;
   } else {
     // Send the token to your server
-    console.log(token);
+    // console.log(token);
     stripeTokenHandler(token);
   }
 });

@@ -1,0 +1,102 @@
+    <!--====== Main App ======-->
+    <div id="app">
+        <!--====== App Content ======-->
+        <div class="app-content">
+
+            <%- include('./dashboard_partial/dashboard_nav.ejs'); %>
+
+
+            <!--====== Section 2 ======-->
+            <div class="u-s-p-b-60">
+
+                <!--====== Section Content ======-->
+                <div class="section__content">
+                    <div class="dash">
+                        <div class="container">
+                            <div class="row">
+                                <%- include('./dashboard_partial/dashboard_left.ejs'); %>
+                                <div class="col-lg-9 col-md-12">
+                                    <div class="dash__box dash__box--shadow dash__box--radius dash__box--bg-white">
+                                        <div class="dash__pad-2">
+                                            <h1 class="dash__h1 u-s-m-b-14">Add new Address</h1>
+
+                                            <span class="dash__text u-s-m-b-30">We need an address where we could deliver products.</span>
+                                            
+                                            <form class="dash-address-manipulation" method="POST">
+                                                <input type="hidden" id="address_id"name="address_id" value="<%=address.address_id%>">
+                                                
+                                                <!-- <div class="gl-inline">
+                                                    <div class="u-s-m-b-30">
+
+                                                        <label class="gl-label" for="address-fname">FIRST NAME *</label>
+
+                                                        <input class="input-text input-text--primary-style" type="text" id="address-fname" placeholder="First Name"></div>
+                                                    <div class="u-s-m-b-30">
+
+                                                        <label class="gl-label" for="address-lname">LAST NAME *</label>
+
+                                                        <input class="input-text input-text--primary-style" type="text" id="address-lname" placeholder="Last Name"></div>
+                                                </div> -->
+                                                <div class="gl-inline">
+                                                    <div class="u-s-m-b-30">
+
+                                                        <label class="gl-label" for="address-1">ADDRESS 1 *</label>
+
+                                                        <input class="input-text input-text--primary-style" type="text" id="address_1" name="address_1" 
+                                                        value="<%= address.address_1? address.address_1:'' %>" 
+                                                        required></div>
+                                                    <div class="u-s-m-b-30">
+
+                                                        <label class="gl-label" for="address-2">ADDRESS 2</label>
+
+                                                        <input class="input-text input-text--primary-style" type="text" id="address_2" name="address_2" 
+                                                        value="<%= address.address_2? address.address_2:'' %>"
+                                                        ></div>
+                                                </div>
+                                                <div class="gl-inline">
+                                                    <div class="u-s-m-b-30">
+
+                                                        <!--====== Select Box ======-->
+
+                                                        <label class="gl-label" for="address-country">COUNTRY *</label>
+                                                        <select class="select-box select-box--primary-style" name="country" id="country">
+                                                            <option <%= address.country? "":"selected"  %> value="">Choose Country</option>
+                                                            
+                                                            <option <%= address.country == "UAE"? "selected":"" %> value="UAE">United Arab Emirate (UAE)</option>
+                                                            <option <%= address.country == "UK"? "selected":""  %> value="UK">United Kingdom (UK)</option>
+                                                            <option <%= address.country == "US"? "selected":""  %> value="US">United States (US)</option>
+                                                        </select>
+                                                        <!--====== End - Select Box ======-->
+                                                    </div>
+                                                </div>
+                                                <div class="gl-inline">
+                                                    <div class="u-s-m-b-30">
+
+                                                        <label class="gl-label" for="city">TOWN/CITY *</label>
+
+                                                        <input class="input-text input-text--primary-style" type="text" id="city" name="city"
+                                                        value="<%= address.city? address.city:'' %>"></div>
+                                                </div>
+
+                                                <button class="btn btn--e-brand-b-2" type="submit">SAVE</button>
+                                            </form>
+                                            <br>
+                                            <!-- <form class="dash-address-manipulation" action="/dashboard/address/remove" method="POST">
+                                                <input type="hidden" id="address_id"name="address_id" value="<%=address.address_id%>">
+                                                <button class="btn btn--e-brand-b-2" type="submit">REMOVE</button>
+                                            </form> -->
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--====== End - Section Content ======-->
+            </div>
+            <!--====== End - Section 2 ======-->
+        </div>
+        <!--====== End - App Content ======-->
+    </div>
+    <!--====== End - Main App ======-->

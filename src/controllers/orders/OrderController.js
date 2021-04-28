@@ -2,18 +2,18 @@ const ShoppingCartService  = require('../../services/ShoppingCartService');
 const OrderService = require('../../services/OrderService');
 const ErrorHandler = require('../../helpers/ErrorHandler');
 
-const paymentOptions = ["cash", "card", "paypal"]
+const paymentOptions = ["cash", "card"]
 
 class OrderController {
   static async create(req, res, next) {
     try {
-      const { body:{ payment },session: { cartId }, decoded: { customer_id } } = req;
+      const { body:{ payment, shipping_address_id, billing_address_id },session: { cartId }, decoded: { customer_id } } = req;
 
-      if(!paymentOptions.includes(payment)) return ErrorHandler.sendErrorResponse({
-        error: {
-          message: "Payment option not selected",
+      if(!paymentOptions.includes(payment)) return ErrorHandler.next(
+        {
+          message: "Payment option not selected"
         }
-      }, res);
+      );
 
       const [cart] = await Promise.all([
         ShoppingCartService.fetchShoppingCart(cartId),
@@ -36,18 +36,14 @@ class OrderController {
         cart,
         cart_id: cartId,
         total_amount: subTotal,
+        shipping_address_id,
+        billing_address_id
       });
-
-      // const result = await StripController.handlePayment(req,res,next);
-
-      // return res.status(201).send({
-      //   orderDetails: newOrder,
-      //   // result
-      // });
       req.body.order_id = newOrder.order_id;
+      if(payment == "cash") return res.redirect(`/dashboard/orders/${newOrder.order_id}`);
       return next();
     } catch (error) {
-      next(error);
+      return next(error);
     }
   }
 
@@ -56,7 +52,11 @@ class OrderController {
       const { params: { order_id }, decoded: { customer_id } } = req;
       const details = await OrderService.fetchOrderInfo({ order_id, customer_id });
 
-      return res.status(201).send(details);
+      return res.render('layout',{
+        template: 'dash-manage-order',
+        data: req.decoded,
+        order: details,
+      })
     } catch (error) {
       next(error);
     }
