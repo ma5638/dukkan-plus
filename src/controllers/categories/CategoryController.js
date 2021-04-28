@@ -3,6 +3,8 @@ const CategoryService = require('../../services/CategoryService');
 // const ProductHelpers = require('../../helpers/ProductHelpers');
 const HttpError = require('../../helpers/ErrorHandler');
 
+const DEFAULTLIMIT = 10;
+
 class CategoryController{
     static async getAllCategories(req, res, next) {
         try {
@@ -10,7 +12,7 @@ class CategoryController{
             query: { page, limit, description_length }
             } = req;
             const requiredPage = page || 1;
-            const requiredLimit = limit || 20;
+            const requiredLimit = limit || DEFAULTLIMIT;
             const descriptionLength = description_length || 200;
 
             const { rows, count } = await CategoryService.fetchAndCountCategories({

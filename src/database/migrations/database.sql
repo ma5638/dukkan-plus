@@ -227,7 +227,9 @@ INSERT INTO `category` (`category_id`,`name`, `description`) VALUES
 		(2,'Fruits', 
        'Build towards a healthy lifestyle with our fresh fruits!'),
 		(3,'Canned Goods', 
-			   'In a rush? Fear nothing as these portable and convenient foods got your back!');
+			   'In a rush? Fear nothing as these portable and convenient foods got your back!'),
+		(4,'Cold Meats', 
+			   'Long lasting, but just as fresh! Explore our variety of cold meats!');
 
 -- Populate product table
 
@@ -240,7 +242,10 @@ INSERT INTO `product` (`product_id`, `name`, `description`, `price`, `discounted
        (6, 'Orange', 'Do not forget to bring this masterpiece along in your bitter-sweet journey!', 3.49, 2.99, 'Orange.jpg', 0),
        (7, 'Kidney Beans', 'Kidney beans, boiled and preserved. From the can, to your salad! ', 5.99, 4.99, 'Kidney Beans.jpg', 0),
        (8, 'Tuna', 'Tuna can, from freshwater rivers. ', 5.99, 4.99, 'Tuna.jpg', 0),
-       (9, 'Corn', 'Fear no more! We have the classic corn!', 6.99, 5.99, 'Corn.jpg', 0);
+       (9, 'Corn', 'Fear no more! We have the classic corn!', 6.99, 5.99, 'Corn.jpg', 0),
+       (10, 'Chicken', 'Halal Chicken from the local farms. Please store in the freezer immediately after delivery in an ice box.', 19.99, 0.00, 'chicken.png', 0),
+       (11, 'Lamb Meat', 'Local produce, fresh and halal. Please store in the freezer immediately after delivery in the ice box. ', 49.99, 0.00, 'fish.png', 0),
+       (12, 'Fish', 'From the local fishermen of Dalma, to your doorstep! Please store in the freezer immediately after delivery in the ice box.', 29.99, 0.00, 'lamb meat.png', 0);
 
 -- 102
 
@@ -349,7 +354,7 @@ INSERT INTO `product` (`product_id`, `name`, `description`, `price`, `discounted
 
 -- Populate product_category table
 INSERT INTO `product_category` (`product_id`, `category_id`) VALUES
-       (1, 1),(2,1),(3,1),(4,2),(5,2),(6,2),(7,3),(8,3),(9,3);
+       (1, 1),(2,1),(3,1),(4,2),(5,2),(6,2),(7,3),(8,3),(9,3),(10,4),(11,4),(12,4);
 -- INSERT INTO `product_category` (`product_id`, `category_id`) VALUES
 --        (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1), (8, 1), (9, 1),
 --        (10, 1), (11, 1), (12, 1), (13, 1), (14, 1), (15, 1), (16, 1), (17, 1),
@@ -364,6 +369,7 @@ INSERT INTO `product_category` (`product_id`, `category_id`) VALUES
 --        (79, 5), (80, 6), (81, 6), (82, 6), (83, 6), (84, 6), (85, 6), (86, 6),
 --        (87, 6), (88, 6), (89, 6), (90, 6), (91, 6), (92, 6), (93, 6), (94, 6),
 --        (95, 6), (96, 7), (97, 7), (98, 7), (99, 7), (100, 7), (101, 7);
+
 
 -- Populate attribute table
 -- INSERT INTO `attribute` (`attribute_id`, `name`) VALUES

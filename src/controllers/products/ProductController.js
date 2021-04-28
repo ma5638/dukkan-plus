@@ -3,6 +3,8 @@ const ReviewService = require('../../services/ReviewService');
 const ProductHelpers = require('../../helpers/ProductHelpers');
 const HttpError = require('../../helpers/ErrorHandler');
 
+const DEFAULTLIMIT = 4;
+
 class ProductController {
   static async getAllProducts(req, res, next) {
     try {
@@ -10,7 +12,7 @@ class ProductController {
         query: { page, limit, description_length }
       } = req;
       const requiredPage = page || 1;
-      const requiredLimit = limit || 2;
+      const requiredLimit = limit || DEFAULTLIMIT;
       const descriptionLength = description_length || 200;
 
       const { count, rows } = await ProductService.fetchAndCountProducts({
@@ -43,7 +45,7 @@ class ProductController {
         query: { page, limit, description_length }
       } = req;
       const requiredPage = page || 1;
-      const requiredLimit = limit || 20;
+      const requiredLimit = limit || DEFAULTLIMIT;
       const descriptionLength = description_length || 200;
 
       const { rows, count } = await ProductService.fetchProductsByCategory({
@@ -79,7 +81,7 @@ class ProductController {
         }
       } = req;
       const requiredPage = page || 1;
-      const requiredLimit = limit || 20;
+      const requiredLimit = limit || DEFAULTLIMIT;
       const descriptionLength = description_length || 200;
       const { rows, count } = await ProductService.fetchProductsBySearchKeyword(
         {

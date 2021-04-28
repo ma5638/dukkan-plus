@@ -44,7 +44,7 @@
                                             <img class="u-img-fluid" src="/images/product/<%= image_link %>"
                                                 data-zoom-image="/images/product/<%= image_link %>" alt="">
                                         </div>
-                                        <div class="pd-o-img-wrap" data-src="/images/product/product-d-2.jpg">
+                                        <!-- <div class="pd-o-img-wrap" data-src="/images/product/product-d-2.jpg">
 
                                             <img class="u-img-fluid" src="/images/product/product-d-2.jpg"
                                                 data-zoom-image="/images/product/product-d-2.jpg" alt="">
@@ -63,7 +63,7 @@
 
                                             <img class="u-img-fluid" src="/images/product/product-d-5.jpg"
                                                 data-zoom-image="/images/product/product-d-5.jpg" alt="">
-                                        </div>
+                                        </div> -->
                                 </div>
 
                                 <span class="pd-text">Click for larger zoom</span>
@@ -73,9 +73,9 @@
                                     <div id="pd-o-thumbnail">
                                         <div>
 
-                                            <img class="u-img-fluid" src="/images/product/product-d-1.jpg" alt="">
+                                            <img class="u-img-fluid" src="/images/product/<%= image_link %>" alt="">
                                         </div>
-                                        <div>
+                                        <!-- <div>
 
                                             <img class="u-img-fluid" src="/images/product/product-d-2.jpg" alt="">
                                         </div>
@@ -90,7 +90,7 @@
                                         <div>
 
                                             <img class="u-img-fluid" src="/images/product/product-d-5.jpg" alt="">
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -112,13 +112,14 @@
 
                                     <span class="pd-detail__price">AED <%= product.price %></span>
 
-                                    <del class="pd-detail__del">AED <%= product.discounted_price %></del>
+                                    <del class="pd-detail__del"><%= product.discounted_price == 0.00? '': 'AED' + product.discounted_price %></del>
                                 </div>
                             </div>
                             <div class="u-s-m-b-15">
-                                <div class="pd-detail__rating gl-rating-style"><i class="fas fa-star"></i><i
+                                <div class="pd-detail__rating gl-rating-style">
+                                    <!-- <i class="fas fa-star"></i><i
                                         class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                        class="fas fa-star-half-alt"></i>
+                                        class="fas fa-star-half-alt"></i> -->
 
                                     <span class="pd-detail__review u-s-m-l-4">
 
@@ -127,14 +128,14 @@
                                         </a></span>
                                 </div>
                             </div>
-                            <div class="u-s-m-b-15">
+                            <!-- <div class="u-s-m-b-15">
                                 <div class="pd-detail__inline">
 
                                     <span class="pd-detail__stock">200 in stock</span>
 
                                     <span class="pd-detail__left">Only 2 left</span>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="u-s-m-b-15">
 
                                 <span class="pd-detail__preview-desc">
