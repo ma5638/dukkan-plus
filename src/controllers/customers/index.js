@@ -200,12 +200,18 @@ customerRouter.get(
   '/dashboard/orders',
   AuthValidator.validateToken,
   async (req, res,next) => {
-    const {count, rows} = await CustomerController.getOrders(req,res,next);
+    try{
+      const {count, rows} = await CustomerController.getOrders(req,res,next);
+    // console.log(rows[0].order_details[0].product.Category[0].name);
     return res.render("layout",{
       template: 'dash-my-order',
       data: req.auth,
       orders: rows,
     });
+    } catch(error){
+      return next(error);
+    }
+    
   }
 );
 

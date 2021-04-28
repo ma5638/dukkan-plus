@@ -14,23 +14,23 @@ orderRouter.post(
   ErrorValidator.check,
   InputValidator.checkoutValidator(),
   ErrorValidator.check,
-  OrderController.create,
+  OrderController.create, 
   StripHelpers.createToken,
   InputValidator.stripeValidator(),
   ErrorValidator.check,
   StripController.handlePayment,
 );
 
-orderRouter.post(
-  '/orders/end',
-  AuthValidator.validateToken,
-  (req,res)=>{
-    return res.redirect('/dashboard/orders');
-  }
-)
+// orderRouter.post(
+//   '/orders/end',
+//   AuthValidator.validateToken,
+//   (req,res)=>{
+//     return res.redirect(`/dashboard/orders/${req.body.order_id}`);
+//   }
+// )
 
 orderRouter.get(
-  '/orders/:order_id',
+  '/dashboard/orders/:order_id',
   AuthValidator.validateToken,
   InputValidator.integerValidator('order_id'),
   ErrorValidator.check,

@@ -8,10 +8,10 @@ const shoppingCartRouter = express.Router();
 
 shoppingCartRouter.post(
   '/shoppingCart/add',
-  (req,res,next)=>{
-    console.log(req.body);
-    return next();
-  },
+  // (req,res,next)=>{
+  //   console.log(req.body);
+  //   return next();
+  // },
   InputValidator.cartValidator(),
   ErrorValidator.check,
   ShoppingCartController.addProductToCart

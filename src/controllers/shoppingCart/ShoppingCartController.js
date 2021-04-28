@@ -42,8 +42,6 @@ class ShoppingController {
       const shoppingCart = await ShoppingCartService.removeItemFromShoppingCart(item_id,cartId);
 
       // return res.status(200).send(shoppingCart);
-
-      console.log(shoppingCart);
       return res.redirect('/shoppingCart')
     } catch (error) {
       next(error);
@@ -69,11 +67,6 @@ class ShoppingController {
 
       const shoppingCart = await ShoppingCartService.fetchShoppingCart(cartId);
 
-      console.log(shoppingCart);
-
-      // return res.status(200).send(shoppingCart);
-
-      // console.log(shoppingCart);
       return res.render("layout",{
         template: "cart",
         data: req.auth,

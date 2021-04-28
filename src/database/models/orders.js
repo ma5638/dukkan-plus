@@ -70,9 +70,16 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   orders.associate = (models) => {
-    orders.belongsTo(models.customer, {
-      foreignKey: 'customer_id',
-      targetKey: 'customer_id'
+    orders.belongsTo(models.address, {
+      as: 'Shipping',
+      foreignKey: 'shipping_address_id',
+      targetKey: 'address_id'
+    });
+
+    orders.belongsTo(models.address, {
+      as: 'Billing',
+      foreignKey: 'billing_address_id',
+      targetKey: 'address_id',
     });
 
     orders.hasMany(models.order_detail, {

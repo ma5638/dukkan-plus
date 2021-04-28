@@ -5157,13 +5157,14 @@ input::-ms-clear {
     opacity: 0;
     visibility: hidden;
     transition: 0.3s; }
-    .is-grid-active .product-m__add-cart > a {
+    .is-grid-active .product-m__add-cart > form > button {
       padding: 12px;
       border-radius: 0.125rem;
       font-size: 13px;
       width: 100%;
       text-align: center;
-      display: block; }
+      display: block; 
+      cursor: pointer;}
   .is-grid-active .product-m__quick-look {
     position: absolute;
     top: 8px;

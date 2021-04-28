@@ -28,7 +28,6 @@ class CustomerController {
       const user = await CustomerService.findUser(body);
       const isPasswordMatch = user ? await user.checkPassword(body.password, user.toJSON().password) : user;
 
-      console.log(isPasswordMatch);
       if (!isPasswordMatch) return next();
 
       const customer = user.toJSONData();
@@ -74,8 +73,9 @@ class CustomerController {
   static async getOrders(req, res, next) {
     try {
       const { decoded } = req;
-      return await OrderService.fetchOrders({ customer_id: decoded.customer_id });
+      return await OrderService.fetchOrders({ customer_id: decoded.customer_id });;
     } catch (error) {
+      console.error(error);
       return [];
     }
 
@@ -123,7 +123,7 @@ class CustomerController {
     }
   }
 
-  static async updateAddress(req,re,nexts){
+  static async updateAddress(req,res,next){
     try {
       const { body, decoded, params } = req;
 

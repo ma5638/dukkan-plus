@@ -3,31 +3,7 @@
     <!--====== App Content ======-->
     <div class="app-content">
 
-        <!--====== Section 1 ======-->
-        <div class="u-s-p-y-60">
-
-            <!--====== Section Content ======-->
-            <div class="section__content">
-                <div class="container">
-                    <div class="breadcrumb">
-                        <div class="breadcrumb__wrap">
-                            <ul class="breadcrumb__list">
-                                <li class="has-separator">
-
-                                    <a href="index.html">Home</a>
-                                </li>
-                                <li class="is-marked">
-
-                                    <a href="dash-my-order.html">My Account</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--====== End - Section 1 ======-->
-
+        <%- include('./dashboard_partial/dashboard_nav.ejs'); %>
 
         <!--====== Section 2 ======-->
         <div class="u-s-p-b-60">
@@ -37,86 +13,7 @@
                 <div class="dash">
                     <div class="container">
                         <div class="row">
-                            <div class="col-lg-3 col-md-12">
-
-                                <!--====== Dashboard Features ======-->
-                                <div class="dash__box dash__box--bg-white dash__box--shadow u-s-m-b-30">
-                                    <div class="dash__pad-1">
-
-                                        <span class="dash__text u-s-m-b-16">Hello, John Doe</span>
-                                        <ul class="dash__f-list">
-                                            <li>
-
-                                                <a href="/dashboard">Manage My Account</a>
-                                            </li>
-                                            <li>
-
-                                                <a href="/dashboard/profile">My Profile</a>
-                                            </li>
-                                            <li>
-
-                                                <a href="dash-address-book.html">Address Book</a>
-                                            </li>
-                                            <li>
-
-                                                <a href="dash-track-order.html">Track Order</a>
-                                            </li>
-                                            <li>
-
-                                                <a class="dash-active" href="/dashboard/orders">My Orders</a>
-                                            </li>
-                                            <li>
-
-                                                <a href="dash-payment-option.html">My Payment Options</a>
-                                            </li>
-                                            <li>
-
-                                                <a href="dash-cancellation.html">My Returns & Cancellations</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="dash__box dash__box--bg-white dash__box--shadow dash__box--w">
-                                    <div class="dash__pad-1">
-                                        <ul class="dash__w-list">
-                                            <li>
-                                                <div class="dash__w-wrap">
-
-                                                    <span class="dash__w-icon dash__w-icon-style-1"><i
-                                                            class="fas fa-cart-arrow-down"></i></span>
-
-                                                    <span class="dash__w-text">4</span>
-
-                                                    <span class="dash__w-name">Orders Placed</span>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="dash__w-wrap">
-
-                                                    <span class="dash__w-icon dash__w-icon-style-2"><i
-                                                            class="fas fa-times"></i></span>
-
-                                                    <span class="dash__w-text">0</span>
-
-                                                    <span class="dash__w-name">Cancel Orders</span>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="dash__w-wrap">
-
-                                                    <span class="dash__w-icon dash__w-icon-style-3"><i
-                                                            class="far fa-heart"></i></span>
-
-                                                    <span class="dash__w-text">0</span>
-
-                                                    <span class="dash__w-name">Wishlist</span>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!--====== End - Dashboard Features ======-->
-                            </div>
+                            <%- include('./dashboard_partial/dashboard_left.ejs'); %>
                             <div class="col-lg-9 col-md-12">
                                 <div
                                     class="dash__box dash__box--shadow dash__box--radius dash__box--bg-white u-s-m-b-30">
@@ -125,20 +22,6 @@
 
                                         <span class="dash__text u-s-m-b-30">Here you can see all products that have been
                                             delivered.</span>
-                                        <form class="m-order u-s-m-b-30">
-                                            <div class="m-order__select-wrapper">
-
-                                                <label class="u-s-m-r-8" for="my-order-sort">Show:</label><select
-                                                    class="select-box select-box--primary-style" id="my-order-sort">
-                                                    <option selected>Last 5 orders</option>
-                                                    <option>Last 15 days</option>
-                                                    <option>Last 30 days</option>
-                                                    <option>Last 6 months</option>
-                                                    <option>Orders placed in 2018</option>
-                                                    <option>All Orders</option>
-                                                </select>
-                                            </div>
-                                        </form>
                                         <!-- START OF ORDER LIST -->
                                         <div class="m-order__list">
                                             <% for(order of orders) { %>
@@ -154,13 +37,13 @@
                                                             <% if(order.status==1) { %>
                                                                 <span class="manage-o__badge badge--shipped">Successful Transaction</span>
                                                             <% } else { %>
-                                                                <span class="manage-o__badge badge--delivered">Unsuccessful Transaction</span>
+                                                                <span class="manage-o__badge badge--delivered">Payment Pending</span>
                                                             <% } %>
                                                         </div>
                                                         <div>
                                                             <div class="dash__link dash__link--brand">
 
-                                                                <a href="dash-manage-order.html">MANAGE</a>
+                                                                <a href="/dashboard/orders/<%= order.order_id %>">MANAGE</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -169,9 +52,13 @@
                                                 <div class="manage-o__description">
                                                     <div class="description__container">
                                                         <div class="description__img-wrap">
-
+                                                            <% image_link= product.product
+                                                                    && product.product.Category && product.product.Category[0]
+                                                                    && product.product.Category[0].name && product.product.image?
+                                                                    product.product.Category[0].name + "/" +
+                                                                    product.product.image:"product-default.jpg" %>
                                                             <img class="u-img-fluid"
-                                                                src="images/product/electronic/product3.jpg" alt="">
+                                                                src="/images/product/<%= image_link %>" alt="">
                                                         </div>
                                                         <div class="description-title"><%= product.product_name %></div>
                                                     </div>

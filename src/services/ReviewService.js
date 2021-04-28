@@ -45,7 +45,6 @@ class ReviewService {
             rating,
             created_on: Date.now()
         });
-        console.log("Done!")
         return result;
     }
 

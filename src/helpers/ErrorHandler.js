@@ -9,7 +9,12 @@ class HttpError extends Error {
 
   static throwErrorIfNullOrEmpty(data, message, code = 404) {
     if (!data || data.length < 1) {
-      throw new HttpError(message, code);
+      // throw new HttpError(message, code);
+      const error = {
+        message,
+        code
+      }
+      throw error;
     }
   }
 

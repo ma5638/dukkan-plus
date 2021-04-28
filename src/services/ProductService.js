@@ -99,8 +99,6 @@ class ProductService {
       }
     });
 
-    console.log(result);
-
     return result;
   }
 

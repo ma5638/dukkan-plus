@@ -1,0 +1,185 @@
+<!--====== Main App ======-->
+<div id="app">
+    <!--====== App Content ======-->
+    <div class="app-content">
+
+        <%- include('./dashboard_partial/dashboard_nav.ejs'); %>
+
+
+        <!--====== Section 2 ======-->
+        <div class="u-s-p-b-60">
+
+            <!--====== Section Content ======-->
+            <div class="section__content">
+                <div class="dash">
+                    <div class="container">
+                        <div class="row">
+                            <%- include('./dashboard_partial/dashboard_left.ejs'); %>
+                            <div class="col-lg-9 col-md-12">
+                                <h1 class="dash__h1 u-s-m-b-30">Order Details</h1>
+                                <div
+                                    class="dash__box dash__box--shadow dash__box--radius dash__box--bg-white u-s-m-b-30">
+                                    <div class="dash__pad-2">
+                                        <div class="dash-l-r">
+                                            <div>
+                                                <div class="manage-o__text-2 u-c-secondary">Order #<%= order.order_id %></div>
+                                                <div class="manage-o__text u-c-silver">Placed on 26 Oct 2016 09:08:37
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="manage-o__text-2 u-c-silver">Total:
+
+                                                    <span class="manage-o__text-2 u-c-secondary">AED <%= order.total_amount %></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    class="dash__box dash__box--shadow dash__box--radius dash__box--bg-white u-s-m-b-30">
+                                    <div class="dash__pad-2">
+                                        <div class="manage-o">
+                                            <!-- <div class="manage-o__header u-s-m-b-30">
+                                                <div class="manage-o__icon"><i class="fas fa-box u-s-m-r-5"></i>
+
+                                                    <span class="manage-o__text">Package 1</span>
+                                                </div>
+                                            </div>
+                                            <div class="dash-l-r">
+                                                <div class="manage-o__text u-c-secondary">Delivered on 26 Oct 2016</div>
+                                                <div class="manage-o__icon"><i class="fas fa-truck u-s-m-r-5"></i>
+
+                                                    <span class="manage-o__text">Standard</span>
+                                                </div>
+                                            </div>
+                                            <div class="manage-o__timeline">
+                                                <div class="timeline-row">
+                                                    <div class="col-lg-4 u-s-m-b-30">
+                                                        <div class="timeline-step">
+                                                            <div class="timeline-l-i timeline-l-i--finish">
+
+                                                                <span class="timeline-circle"></span>
+                                                            </div>
+
+                                                            <span class="timeline-text">Processing</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 u-s-m-b-30">
+                                                        <div class="timeline-step">
+                                                            <div class="timeline-l-i timeline-l-i--finish">
+
+                                                                <span class="timeline-circle"></span>
+                                                            </div>
+
+                                                            <span class="timeline-text">Shipped</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 u-s-m-b-30">
+                                                        <div class="timeline-step">
+                                                            <div class="timeline-l-i">
+
+                                                                <span class="timeline-circle"></span>
+                                                            </div>
+
+                                                            <span class="timeline-text">Delivered</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> -->
+                                            <% for(product of order.order_details) { %>
+                                                <div class="manage-o__description">
+                                                    <div class="description__container">
+                                                        <div class="description__img-wrap">
+                                                            <% image_link= product.product
+                                                                    && product.product.Category && product.product.Category[0]
+                                                                    && product.product.Category[0].name && product.product.image?
+                                                                    product.product.Category[0].name + "/" +
+                                                                    product.product.image:"product-default.jpg" %>
+                                                            <img class="u-img-fluid"
+                                                                src="/images/product/<%= image_link %>" alt="">
+                                                        </div>
+                                                        <div class="description-title"><%= product.product_name %></div>
+                                                    </div>
+                                                    <div class="description__info-wrap">
+                                                        <!-- <div>
+
+                                                            <span
+                                                                class="manage-o__badge badge--processing">Processing</span>
+                                                        </div> -->
+                                                        <div>
+
+                                                            <span class="manage-o__text-2 u-c-silver">Quantity:
+
+                                                                <span
+                                                                    class="manage-o__text-2 u-c-secondary"><%= product.quantity %></span></span>
+                                                        </div>
+                                                        <div>
+
+                                                            <span class="manage-o__text-2 u-c-silver">Unit Price:
+
+                                                                <span
+                                                                    class="manage-o__text-2 u-c-secondary">AED <%= product.unit_cost %></span></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="dash__box dash__box--bg-white dash__box--shadow u-s-m-b-30">
+                                            <div class="dash__pad-3">
+                                                <h2 class="dash__h2 u-s-m-b-8">Shipping Address</h2>
+
+                                                <span class="dash__text-2"><%= order.Shipping.address_1 ? order.Shipping.address_1:'' %></span>
+                                                <span class="dash__text-2"><%= order.Shipping.address_2 ? order.Shipping.address_2:'' %></span>
+                                                <span class="dash__text-2"><%= order.Shipping.city ? order.Shipping.city:'' %></span>
+                                                <span class="dash__text-2"><%= order.Shipping.country ? order.Shipping.country:'' %></span>
+                                            </div>
+                                        </div>
+                                        <div class="dash__box dash__box--bg-white dash__box--shadow dash__box--w">
+                                            <div class="dash__pad-3">
+                                                <h2 class="dash__h2 u-s-m-b-8">Billing Address</h2>
+
+                                                <span class="dash__text-2"><%= order.Billing.address_1 ? order.Billing.address_1:'' %></span>
+                                                <span class="dash__text-2"><%= order.Billing.address_2 ? order.Billing.address_2:'' %></span>
+                                                <span class="dash__text-2"><%= order.Billing.city ? order.Billing.city:'' %></span>
+                                                <span class="dash__text-2"><%= order.Billing.country ? order.Billing.country:'' %></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-lg-6">
+                                        <div class="dash__box dash__box--bg-white dash__box--shadow u-h-100">
+                                            <div class="dash__pad-3">
+                                                <h2 class="dash__h2 u-s-m-b-8">Total Summary</h2>
+                                                <div class="dash-l-r u-s-m-b-8">
+                                                    <div class="manage-o__text-2 u-c-secondary">Subtotal</div>
+                                                    <div class="manage-o__text-2 u-c-secondary">$16.00</div>
+                                                </div>
+                                                <div class="dash-l-r u-s-m-b-8">
+                                                    <div class="manage-o__text-2 u-c-secondary">Shipping Fee</div>
+                                                    <div class="manage-o__text-2 u-c-secondary">$16.00</div>
+                                                </div>
+                                                <div class="dash-l-r u-s-m-b-8">
+                                                    <div class="manage-o__text-2 u-c-secondary">Total</div>
+                                                    <div class="manage-o__text-2 u-c-secondary">$30.00</div>
+                                                </div>
+
+                                                <span class="dash__text-2">Paid by Cash on Delivery</span>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--====== End - Section Content ======-->
+        </div>
+        <!--====== End - Section 2 ======-->
+    </div>
+    <!--====== End - App Content ======-->
+</div>
+<!--====== End - Main App ======-->

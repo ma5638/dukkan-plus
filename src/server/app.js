@@ -79,13 +79,16 @@ app.use((err, req, res, next) => {
   } = err;
   const code = statusCode || 500;
   const errorMessage = message;
+  // console.log("---------------------")
+  // console.log(err);
+  return next();
 
-  if (data) {
-    return res.status(code).send({ errors: data });
-  }
+  // if (data) {
+  //   return res.status(code).send({ errors: data });
+  // }
 
-  logger.error(stack);
-  return res.status(code).send({ message: errorMessage });
+  // logger.error(stack);
+  // return res.status(code).send({ message: errorMessage });
 });
 
 app.use(express.static(path.join(__dirname, '../../static')));    // Static files are loaded here e.g. .css and .js

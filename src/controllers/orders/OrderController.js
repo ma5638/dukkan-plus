@@ -9,10 +9,11 @@ class OrderController {
     try {
       const { body:{ payment, shipping_address_id, billing_address_id },session: { cartId }, decoded: { customer_id } } = req;
 
-      console.log(req.body);
-
       if(!paymentOptions.includes(payment)) return ErrorHandler.next(
-          "Payment option not selected");
+        {
+          message: "Payment option not selected"
+        }
+      );
 
       const [cart] = await Promise.all([
         ShoppingCartService.fetchShoppingCart(cartId),
@@ -38,20 +39,11 @@ class OrderController {
         shipping_address_id,
         billing_address_id
       });
-
-      // const result = await StripController.handlePayment(req,res,next);
-
-      // return res.status(201).send({
-      //   orderDetails: newOrder,
-      //   // result
-      // });
       req.body.order_id = newOrder.order_id;
-      console.log("=======================")
-      console.log(payment);
-      if(payment == "cash") return res.redirect(307, '/orders/end');
+      if(payment == "cash") return res.redirect(`/dashboard/orders/${newOrder.order_id}`);
       return next();
     } catch (error) {
-      next(error);
+      return next(error);
     }
   }
 
@@ -60,7 +52,11 @@ class OrderController {
       const { params: { order_id }, decoded: { customer_id } } = req;
       const details = await OrderService.fetchOrderInfo({ order_id, customer_id });
 
-      return res.status(201).send(details);
+      return res.render('layout',{
+        template: 'dash-manage-order',
+        data: req.decoded,
+        order: details,
+      })
     } catch (error) {
       next(error);
     }

@@ -17,9 +17,12 @@ class StripeController {
       const order = await OrderService.fetchOrderInfo({ order_id, customer_id });
 
       if (order.status === 1) {
-        return res.status(400).send({
-          message: 'Order has already been paid for'
-        });
+        // return res.status(400).send({
+        //   message: 'Order has already been paid for'
+        // });
+        // req.order_id = order_id;
+        
+        return res.redirect(`/dashboard/orders/${order_id}`);
       }
 
       const { total_amount } = order;
@@ -44,7 +47,7 @@ class StripeController {
       // await EmailUtil.sendConfirmationMail({ email });
       
       // return res.status(200).send(result);
-      return res.redirect(307, '/orders/end');
+      return res.redirect(`/dashboard/orders/${order_id}`);
     } catch (error) {
       next(error);
     }
