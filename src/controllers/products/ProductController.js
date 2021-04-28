@@ -32,7 +32,8 @@ class ProductController {
         template: "shop-grid-full",
         data: req.auth,
         products,
-        maxPage
+        maxPage,
+        category_name: undefined
       });
     } catch (error) {
       return next(error);
@@ -107,7 +108,8 @@ class ProductController {
         template: "shop-grid-full",
         data: req.auth,
         products,
-        maxPage
+        maxPage,
+        category_name: undefined
       });
     } catch (error) {
       // return HttpError.sendErrorResponse(error, res);
