@@ -234,18 +234,18 @@ INSERT INTO `category` (`category_id`,`name`, `description`) VALUES
 -- Populate product table
 
 INSERT INTO `product` (`product_id`, `name`, `description`, `price`, `discounted_price`, `image`,`display`) VALUES
-       (1, 'Iceberg Lettuce', 'Add the crunchy green flavor and enrichen your life.', 5.99, 4.99, 'Iceberg Lettuce.jpg', 0),
-       (2, 'Potato', 'Delicious potatoes, organic, grown on land with no pesticides. Imported from Ireland. Can be cooked many different ways, they are as versatile as a potato gets. ', 3.99, 1.99, 'Potato.jpg', 0),
-       (3, 'Tomato', 'Tomato, red, round, locally grown in AlAin. Best for salads. ', 1.49, 0.99, 'Tomato.png', 0),
-       (4, 'Apple', 'Picked from the best ambrosia fields in Jordan. ', 5.99, 4.99, 'Apple.jpg', 0),
-       (5, 'Watermelon', 'Organic, tasty watermelon. ', 12.99, 9.99, 'Watermelon.png', 0),
-       (6, 'Orange', 'Do not forget to bring this masterpiece along in your bitter-sweet journey!', 3.49, 2.99, 'Orange.jpg', 0),
-       (7, 'Kidney Beans', 'Kidney beans, boiled and preserved. From the can, to your salad! ', 5.99, 4.99, 'Kidney Beans.jpg', 0),
-       (8, 'Tuna', 'Tuna can, from freshwater rivers. ', 5.99, 4.99, 'Tuna.jpg', 0),
-       (9, 'Corn', 'Fear no more! We have the classic corn!', 6.99, 5.99, 'Corn.jpg', 0),
-       (10, 'Chicken', 'Halal Chicken from the local farms. Please store in the freezer immediately after delivery in an ice box.', 0.00, 19.99, 'chicken.png', 0),
-       (11, 'Lamb Meat', 'Local produce, fresh and halal. Please store in the freezer immediately after delivery in the ice box. ', 0.00, 49.99, 'lamb meat.png', 0),
-       (12, 'Fish', 'From the local fishermen of Dalma, to your doorstep! Please store in the freezer immediately after delivery in the ice box.', 0.00, 29.99, 'fish.png', 0);
+       (1, 'Iceberg Lettuce', 'Add the crunchy green flavor and enrichen your life.', 4.99,5.99,  'Iceberg Lettuce.jpg', 0),
+       (2, 'Potato', 'Delicious potatoes, organic, grown on land with no pesticides. Imported from Ireland. Can be cooked many different ways, they are as versatile as a potato gets. ', 1.99, 3.99, 'Potato.jpg', 0),
+       (3, 'Tomato', 'Tomato, red, round, locally grown in AlAin. Best for salads. ', 0.99, 1.49, 'Tomato.png', 0),
+       (4, 'Apple', 'Picked from the best ambrosia fields in Jordan. ', 4.99, 5.99, 'Apple.jpg', 0),
+       (5, 'Watermelon', 'Organic, tasty watermelon. ', 9.99, 12.99, 'Watermelon.png', 0),
+       (6, 'Orange', 'Do not forget to bring this masterpiece along in your bitter-sweet journey!', 2.99, 3.49, 'Orange.jpg', 0),
+       (7, 'Kidney Beans', 'Kidney beans, boiled and preserved. From the can, to your salad! ', 4.99, 5.99, 'Kidney Beans.jpg', 0),
+       (8, 'Tuna', 'Tuna can, from freshwater rivers. ', 4.99, 5.99, 'Tuna.jpg', 0),
+       (9, 'Corn', 'Fear no more! We have the classic corn!', 5.99, 6.99, 'Corn.jpg', 0),
+       (10, 'Chicken', 'Halal Chicken from the local farms. Please store in the freezer immediately after delivery in an ice box.', 18.99, 19.99, 'chicken.png', 0),
+       (11, 'Lamb Meat', 'Local produce, fresh and halal. Please store in the freezer immediately after delivery in the ice box. ', 45.99, 49.99, 'lamb meat.png', 0),
+       (12, 'Fish', 'From the local fishermen of Dalma, to your doorstep! Please store in the freezer immediately after delivery in the ice box.', 28.99, 29.99, 'fish.png', 0);
 
 -- 102
 
