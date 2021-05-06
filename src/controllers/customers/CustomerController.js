@@ -8,13 +8,16 @@ class CustomerController {
   static async signUp(req, res, next) {
     try {
       const { body } = req;
+      console.log(body);
       const [user, created] = await CustomerService.findOrCreateUser(body);
+
+      console.log("help");
 
       if (!created) return next();
 
       const customer = user.toJSONData();
       const expiresIn = '1h';
-      // const accessToken = JwtHelper.generateToken({ data: customer, expiresIn });
+      const accessToken = JwtHelper.generateToken({ data: customer, expiresIn });
 
       return res.redirect('/signin');
     } catch (error) {
